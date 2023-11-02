@@ -4,7 +4,7 @@
     {
         public int[] BinCounts { get; }
         public float BinWidth { get; }
-        public float Min { get; }
+        public float Min { get; set; }
         public int NumSamples { get; set; }//We may just know this apriori
         public Histogram(float binWidth, float min, int numBins)
         {

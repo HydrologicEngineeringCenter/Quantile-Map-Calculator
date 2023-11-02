@@ -6,5 +6,10 @@
 		<ImplicitUsings>enable</ImplicitUsings>
 		<Nullable>enable</Nullable>
 	</PropertyGroup>
+
+	<ItemGroup>
+	  <ProjectReference Include="..\ras-ui\H5Assist\H5Assist\H5Assist.csproj" />
+	  <ProjectReference Include="..\ras-ui\Ras.Core\Ras.Core.csproj" />
+	</ItemGroup>
 	
 </Project>
