@@ -17,6 +17,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Ras.Core", "ras-ui\Ras.Core
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "H5Assist", "ras-ui\H5Assist\H5Assist\H5Assist.csproj", "{9CB632A9-F684-4971-94C3-5050AA95DF7B}"
 EndProject
+Project("{778DAE3C-4631-46EA-AA77-85C1314464D9}") = "Ras.Mapper", "ras-ui\Ras.Mapper\Ras.Mapper.vbproj", "{FA5F102A-1105-49D7-BC85-A667EB9A2CBB}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -39,6 +41,10 @@ Global
 		{9CB632A9-F684-4971-94C3-5050AA95DF7B}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{9CB632A9-F684-4971-94C3-5050AA95DF7B}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{9CB632A9-F684-4971-94C3-5050AA95DF7B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{FA5F102A-1105-49D7-BC85-A667EB9A2CBB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FA5F102A-1105-49D7-BC85-A667EB9A2CBB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FA5F102A-1105-49D7-BC85-A667EB9A2CBB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FA5F102A-1105-49D7-BC85-A667EB9A2CBB}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

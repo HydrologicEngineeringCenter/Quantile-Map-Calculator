@@ -10,6 +10,7 @@
 	<ItemGroup>
 	  <ProjectReference Include="..\ras-ui\H5Assist\H5Assist\H5Assist.csproj" />
 	  <ProjectReference Include="..\ras-ui\Ras.Core\Ras.Core.csproj" />
+	  <ProjectReference Include="..\ras-ui\Ras.Mapper\Ras.Mapper.vbproj" />
 	</ItemGroup>
 	
 </Project>

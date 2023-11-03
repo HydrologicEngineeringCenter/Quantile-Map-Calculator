@@ -1,9 +1,11 @@
-﻿using H5Assist;
+﻿using Geospatial;
+using H5Assist;
 using Ras.Layers;
+using RasMapperLib;
 
 namespace AEPGG.Model
 {
-    public static class RasHelper
+    public static class RasWrapper
     {
         public static float[] GetWSEsForAllNodes(string filePath, string meshName)
         {
@@ -22,6 +24,18 @@ namespace AEPGG.Model
             using var hr = new H5Reader(filePath);
             hr.ReadDataset(hdfPathToData, out float[,] data);
             return data.GetLength(1);
+        }
+
+        public static string[] GetMeshNames(string filePath)
+        {
+            RASResults result = new(filePath);
+            int featureCount = result.Geometry.D2FlowArea.FeatureCount();
+            string[] names = new string[featureCount];
+            for(int i = 0; i < featureCount; i++)
+            {
+                names[i] = result.Geometry.D2FlowArea.GetFeatureName(i);
+            }
+            return names;
         }
 
         private static float[] GetDataFromHDF(string filePath, string hdfPathToData)

@@ -21,12 +21,12 @@
         public float InverseCDF(float exceedenceProbability)
         {
             int binIndex = 0;
-            float binStartingPercentile = 0;
+            float binExceedenceProb = 0;
             int numSamplesSoFar = 0;
-            while (binStartingPercentile > exceedenceProbability)
+            while (binExceedenceProb > exceedenceProbability)
             {
                 numSamplesSoFar += BinCounts[binIndex];
-                binStartingPercentile = 1 - (numSamplesSoFar / BinCounts.Length);
+                binExceedenceProb = 1 - (numSamplesSoFar / BinCounts.Length);
                 binIndex++;
             }
             return (binIndex * BinWidth) + (BinWidth / 2);
