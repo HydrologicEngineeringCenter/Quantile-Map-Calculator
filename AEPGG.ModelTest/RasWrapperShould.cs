@@ -11,7 +11,6 @@ namespace AEPGG.ModelTest
         public void GetWSEsForAllNodes_ReturnsData()
         {
             var result = RasWrapper.GetWSEsForAllNodes(filePath, meshName);
-
             Assert.NotNull(result);
             Assert.True(result.Length > 0);
         }

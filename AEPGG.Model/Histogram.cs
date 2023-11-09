@@ -14,22 +14,22 @@
         }
         public void Add(float value)
         {
-            int binIndex = (int)Math.Ceiling((value - Min) / BinWidth);
+            int binIndex = (int)Math.Floor((value - Min) / BinWidth);
             BinCounts[binIndex]++;
             NumSamples++; //We may just know this apriori
         }
         public float InverseCDF(float exceedenceProbability)
         {
             int binIndex = 0;
-            float binExceedenceProb = 0;
+            float binExceedenceProb = 1;
             int numSamplesSoFar = 0;
             while (binExceedenceProb > exceedenceProbability)
             {
                 numSamplesSoFar += BinCounts[binIndex];
-                binExceedenceProb = 1 - (numSamplesSoFar / BinCounts.Length);
+                binExceedenceProb = 1f - ((float)numSamplesSoFar / BinCounts.Length);
                 binIndex++;
             }
-            return (binIndex * BinWidth) + (BinWidth / 2);
+            return (binIndex * BinWidth);
         }
     }
 }

@@ -47,7 +47,7 @@ namespace AEPGG.Model
             dataOut = new float[cellCount];
             for (int i = 0; i < cellCount; i++)
             {
-                dataOut[i] = data[0, (i)];
+                dataOut[i] = data[0, (i)];//This is hard coding the first row. Really only works on Max and Min datasets. Other datasets have many more rows. 
             }
             return dataOut;
         }

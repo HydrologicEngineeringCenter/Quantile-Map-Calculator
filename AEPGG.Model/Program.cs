@@ -1,3 +1,5 @@
-﻿using System.Diagnostics;
-
-Console.WriteLine("FUCK");
+﻿using AEPGG.Model;
+ static void main(string[] args)
+{
+    Console.WriteLine("poo");
+}
