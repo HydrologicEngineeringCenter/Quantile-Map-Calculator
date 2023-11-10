@@ -14,31 +14,25 @@
             NumBins = numBins;
             BinWidth = binWidth;
         }
-
-        public void AddResults(string pathToResultHDF) 
+        public void AddResults(IHydraulicResults result) 
         {
             if (Histograms == null)
-                InitializeHistograms(pathToResultHDF);
-
-            string meshName = RasWrapper.GetMeshNames(pathToResultHDF)[0]; // Only working with 1 2D area for now. 
-            float[] data = RasWrapper.GetWSEsForAllNodes(pathToResultHDF, meshName);
+                InitializeHistograms(result);
+            float[] data = result.MaxWSEs;
             for (int i = 0; i < data.Length; i++)
             {
                 Histograms[i].Add(data[i]);
             }
         }
-
-        private void InitializeHistograms(string pathToResultHDF)
+        private void InitializeHistograms(IHydraulicResults result)
         {
-            string meshName = RasWrapper.GetMeshNames(pathToResultHDF)[0]; // Only working with 1 2D area for now. 
-            float[] data = RasWrapper.GetMinWSEForAllNodes(pathToResultHDF, meshName);
+            float[] data = result.MinWSEs;
             Histograms = new Histogram[data.Length];
             for (int i = 0; i < data.Length; i++)
             {
                 Histograms[i] = new(BinWidth, data[i], NumBins);
             }
         }
-
         public void SaveResults(string saveToFilePath)
         {
             throw new NotImplementedException();

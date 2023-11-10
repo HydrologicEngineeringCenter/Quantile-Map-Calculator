@@ -5,7 +5,7 @@ using RasMapperLib;
 
 namespace AEPGG.Model
 {
-    public static class RasWrapper
+    public static class RasTools
     {
         public static float[] GetWSEsForAllNodes(string filePath, string meshName)
         {
