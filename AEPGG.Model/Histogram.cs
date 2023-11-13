@@ -26,7 +26,7 @@
             while (binExceedenceProb > exceedenceProbability)
             {
                 numSamplesSoFar += BinCounts[binIndex];
-                binExceedenceProb = 1f - ((float)numSamplesSoFar / BinCounts.Length);
+                binExceedenceProb = 1f - ((float)numSamplesSoFar / NumSamples);
                 binIndex++;
             }
             return (binIndex * BinWidth);

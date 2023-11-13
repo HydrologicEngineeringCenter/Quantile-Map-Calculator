@@ -17,7 +17,6 @@ namespace AEPGG.Model
             string hdfPathToData = ResultsDatasets.Unsteady.SummaryOutput.FlowAreas.MinWaterSurface.Name(meshName);
             return GetDataFromHDF(filePath, hdfPathToData);
         }
-
         public static int GetCellCount(string filePath, string meshName)
         {
             string hdfPathToData = ResultsDatasets.Unsteady.SummaryOutput.FlowAreas.MaxWaterSurface.Name(meshName);
@@ -25,7 +24,6 @@ namespace AEPGG.Model
             hr.ReadDataset(hdfPathToData, out float[,] data);
             return data.GetLength(1);
         }
-
         public static string[] GetMeshNames(string filePath)
         {
             RASResults result = new(filePath);
@@ -37,8 +35,7 @@ namespace AEPGG.Model
             }
             return names;
         }
-
-        private static float[] GetDataFromHDF(string filePath, string hdfPathToData)
+        private static float[] GetDataFromHDF(string filePath, string hdfPathToData, int rowID = 0)
         {
             float[] dataOut;
             using H5Reader hr = new(filePath);
@@ -47,7 +44,7 @@ namespace AEPGG.Model
             dataOut = new float[cellCount];
             for (int i = 0; i < cellCount; i++)
             {
-                dataOut[i] = data[0, (i)];//This is hard coding the first row. Really only works on Max and Min datasets. Other datasets have many more rows. 
+                dataOut[i] = data[rowID, (i)];
             }
             return dataOut;
         }

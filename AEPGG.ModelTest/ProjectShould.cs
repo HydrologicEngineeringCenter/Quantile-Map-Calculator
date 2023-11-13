@@ -20,20 +20,22 @@ namespace AEPGG.ModelTest
         [Fact]
         public void AddLotsProperly()
         {
-            IHydraulicResults[] mockResults = GetMockResults();
+            int numPoints = 5000;
+            IHydraulicResults[] mockResults = GetMockResults(numPoints);
             Project project = new(outFilePath, theAEPs, 0.5f, 100);
             foreach(var mockResult in mockResults)
             {
                 project.AddResults(mockResult);
             }
             Assert.Equal(project.Histograms.Count(),5);
-            Assert.Equal(project.Histograms[0].NumSamples, 500);
-            Assert.True(project.Histograms[0].InverseCDF(.01f) > 5);
+            Assert.Equal(project.Histograms[0].NumSamples, numPoints);
+            float valueOfThe100yr = project.Histograms[0].InverseCDF(.01f);
+            Assert.True(valueOfThe100yr > 5);
         }
 
-        private IHydraulicResults[] GetMockResults()
+        private IHydraulicResults[] GetMockResults(int numPoints)
         {
-            MockHydraulicResult[] mockHydraulicResults = new MockHydraulicResult[500];
+            MockHydraulicResult[] mockHydraulicResults = new MockHydraulicResult[numPoints];
             Random random = new(1234);
             for (int i = 0; i < mockHydraulicResults.Length; i++)
             {

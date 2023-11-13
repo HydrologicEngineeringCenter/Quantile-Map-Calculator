@@ -4,8 +4,8 @@ namespace AEPGG.Model
 {
     public class RasResultWrapper : IHydraulicResults
     {
-        private string _hdfFilePath;
-        private string meshName;
+        private readonly string _hdfFilePath;
+        private readonly string meshName;
         public int CellCounts => RasTools.GetCellCount(_hdfFilePath, meshName);
         public float[] MaxWSEs => RasTools.GetWSEsForAllNodes(_hdfFilePath, meshName);
         public float[] MinWSEs => RasTools.GetMinWSEForAllNodes(_hdfFilePath, meshName);
