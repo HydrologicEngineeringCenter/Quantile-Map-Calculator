@@ -1,13 +1,16 @@
-﻿namespace AEPGG.Model
+﻿using Utility.DataStructures;
+
+namespace AEPGG.Model
 {
     public class Histogram
     {
         public int[] BinCounts { get; }
         public float BinWidth { get; }
         public float Min { get; set; }
-        public int NumSamples { get; set; }//We may just know this apriori
-        public Histogram(float binWidth, float min, int numBins)
+        public int NumSamples { get; set; }
+        public Histogram(float binWidth, float min, float max)
         {
+            int numBins = (int)Math.Ceiling((max - min) / binWidth);
             BinCounts = new int[numBins];
             BinWidth = binWidth;
             Min = min;
@@ -16,7 +19,7 @@
         {
             int binIndex = (int)Math.Floor((value - Min) / BinWidth);
             BinCounts[binIndex]++;
-            NumSamples++; //We may just know this apriori
+            NumSamples++; 
         }
         public float InverseCDF(float exceedenceProbability)
         {
