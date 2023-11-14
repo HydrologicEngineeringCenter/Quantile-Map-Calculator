@@ -29,6 +29,18 @@ namespace AEPGG.ModelTest
             Assert.Equal(10, histogram.InverseCDF(.1f));
             Assert.Equal(1, histogram.InverseCDF(.9f)); 
         }
+
+        [Fact]
+        public void ReturnMaxValueForExceedenceProbabilityOutOfDataRange()
+        {
+              Histogram histogram = new(1, 0, 20);
+            histogram.Add(.99f); // bin 0
+            for (int i = 1; i < 10; i++)
+            {
+                histogram.Add(i);
+            }
+            Assert.Equal(10, histogram.InverseCDF(.01f));
+        }
         
     }
 }
