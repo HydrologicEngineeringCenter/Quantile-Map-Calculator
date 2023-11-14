@@ -10,7 +10,7 @@ namespace AEPGG.ModelTest
         [Fact]
         public void GetWSEsForAllNodes_ReturnsData()
         {
-            var result = RasTools.GetWSEsForAllNodes(filePath, meshName);
+            var result = RasTools.GetMaxOrMinWSEForAll2DCells(filePath, meshName, true);
             Assert.NotNull(result);
             Assert.True(result.Length > 0);
         }
@@ -18,7 +18,7 @@ namespace AEPGG.ModelTest
         [Fact]
         public void GetMinWSEForAllNodes_ReturnsData()
         {
-            var result = RasTools.GetMinWSEForAllNodes(filePath, meshName);
+            var result = RasTools.GetMaxOrMinWSEForAll2DCells(filePath, meshName, false);
             Assert.NotNull(result);
             Assert.True(result.Length > 0);
         }

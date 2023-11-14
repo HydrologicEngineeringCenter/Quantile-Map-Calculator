@@ -7,14 +7,27 @@ namespace AEPGG.Model
 {
     public static class RasTools
     {
-        public static float[] GetWSEsForAllNodes(string filePath, string meshName)
+        public static float[][] GetMaxOrMinWSEForAll2DCells(string filePath, bool getMax)
         {
-            string hdfPathToData = ResultsDatasets.Unsteady.SummaryOutput.FlowAreas.MaxWaterSurface.Name(meshName);
-            return GetDataFromHDF(filePath, hdfPathToData);
+            string[] meshNames = GetMeshNames(filePath);
+            float[][] WSEs = new float[meshNames.Length][];
+            for(int i = 0; i < meshNames.Length; i++)
+            {
+                WSEs[i] = GetMaxOrMinWSEsFor2DCells(filePath, meshNames[i], getMax);
+            }
+            return WSEs;
         }
-        public static float[] GetMinWSEForAllNodes(string filePath, string meshName)
+        public static float[] GetMaxOrMinWSEForAll2DCells(string filePath, string meshName, bool getMax)
         {
-            string hdfPathToData = ResultsDatasets.Unsteady.SummaryOutput.FlowAreas.MinWaterSurface.Name(meshName);
+            string hdfPathToData;
+            if (getMax)
+            {
+                hdfPathToData = ResultsDatasets.Unsteady.SummaryOutput.FlowAreas.MaxWaterSurface.Name(meshName);
+            }
+            else
+            {
+                hdfPathToData = ResultsDatasets.Unsteady.SummaryOutput.FlowAreas.MinWaterSurface.Name(meshName);
+            }
             return GetDataFromHDF(filePath, hdfPathToData);
         }
         public static int GetCellCount(string filePath, string meshName)
@@ -48,5 +61,37 @@ namespace AEPGG.Model
             }
             return dataOut;
         }
+        private static bool ContainsXS(string filePath)
+        {
+            RASResults result = new(filePath);
+            bool hasXS = false;
+            if (result.Geometry.XS.FeatureCount() > 0)
+            {
+                hasXS = true;
+            }
+            return hasXS;
+        }
+        private static bool ContainsSA(string filePath)
+        {
+            RASResults result = new(filePath);
+            bool hasSA = false;
+            if (result.Geometry.StorageArea.FeatureCount() > 0)
+            {
+                hasSA = true;
+            }
+            return hasSA;
+        }
+        private static bool Contains2D(string filePath)
+        {
+            RASResults result = new(filePath);
+            bool has2D = false;
+            if (result.Geometry.D2FlowArea.FeatureCount() > 0)
+            {
+                has2D = true;
+            }
+            return has2D;
+        }
+
+
     }
 }

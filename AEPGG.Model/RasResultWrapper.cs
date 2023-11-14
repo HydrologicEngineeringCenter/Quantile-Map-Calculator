@@ -7,8 +7,8 @@ namespace AEPGG.Model
         private readonly string _hdfFilePath;
         private readonly string meshName;
         public int CellCounts => RasTools.GetCellCount(_hdfFilePath, meshName);
-        public float[] MaxWSEs => RasTools.GetWSEsForAllNodes(_hdfFilePath, meshName);
-        public float[] MinWSEs => RasTools.GetMinWSEForAllNodes(_hdfFilePath, meshName);
+        public float[] MaxWSEs => RasTools.GetMaxOrMinWSEForAll2DCells(_hdfFilePath, meshName, true);
+        public float[] MinWSEs => RasTools.GetMaxOrMinWSEForAll2DCells(_hdfFilePath, meshName, false);
 
         public RasResultWrapper(string hdfFilePath)
         {
