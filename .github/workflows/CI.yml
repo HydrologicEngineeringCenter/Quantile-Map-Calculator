@@ -24,8 +24,9 @@ jobs:
       run: |
         git config --global user.email "AEPGG@GitHub.com"\
         git config --global user.name "AEPGG"
-        export GIT_TOKEN=${{ secrets.NEXUS_READ }}
         git submodule update --init --recursive
+      env:
+        GITHUB_TOKEN: ${{ secrets.NEXUS_READ }}
     - name: Restore dependencies
       run: dotnet restore
     - name: Build
