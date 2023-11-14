@@ -20,20 +20,20 @@ namespace AEPGG.Model
         {
             if (Histograms.Length == 0)
                 InitializeHistograms(result);
-            float[] data = result.MaxWSEs;
-            for (int i = 0; i < data.Length; i++)
+            float[][] data = result.Max2DWSEs;
+            for (int i = 0; i < data[0].Length; i++)//hard coding 1 2D area for now.
             {
-                Histograms![i].Add(data[i]);
+                Histograms![i].Add(data[0][i]);//hard coding 1 2D area for now.
             }
         }
         private void InitializeHistograms(IHydraulicResults result)
         {
-            float[] data = result.MinWSEs;
-            Histograms = new Histogram[data.Length];
-            for (int i = 0; i < data.Length; i++)
+            float[][] data = result.Min2DWSEs;
+            Histograms = new Histogram[data[0].Length];//hard coding 1 2D area for now.
+            for (int i = 0; i < data[0].Length; i++) //hard coding 1 2D area for now.
             {
-                float min = data[i];
-                float max = data[i] + Range;
+                float min = data[0][i];//hard coding 1 2D area for now.
+                float max = data[0][i] + Range;//hard coding 1 2D area for now.
                 Histograms[i] = new(BinWidth, min, max);
             }
         }

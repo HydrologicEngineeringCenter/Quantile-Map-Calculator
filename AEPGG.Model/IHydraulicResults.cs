@@ -2,9 +2,9 @@
 {
     public interface IHydraulicResults
     {
-        public int CellCounts { get; }
-        public float[] MaxWSEs { get; }
-        public float[] MinWSEs { get; }
+        public int[] CellCounts2D { get; }
+        public float[][] Max2DWSEs { get; }
+        public float[][] Min2DWSEs { get; }
 
     }
 }

@@ -11,9 +11,9 @@ namespace AEPGG.Model
         {
             string[] meshNames = GetMeshNames(filePath);
             float[][] WSEs = new float[meshNames.Length][];
-            for(int i = 0; i < meshNames.Length; i++)
+            for (int i = 0; i < meshNames.Length; i++)
             {
-                WSEs[i] = GetMaxOrMinWSEsFor2DCells(filePath, meshNames[i], getMax);
+                WSEs[i] = GetMaxOrMinWSEForAll2DCells(filePath, meshNames[i], getMax);
             }
             return WSEs;
         }
@@ -30,6 +30,16 @@ namespace AEPGG.Model
             }
             return GetDataFromHDF(filePath, hdfPathToData);
         }
+        public static int[] GetCellCount(string filePath)
+        {
+            string[] meshNames = GetMeshNames(filePath);
+            int[] cellCounts = new int[meshNames.Length];
+            for (int i = 0; i < meshNames.Length; i++)
+            {
+                cellCounts[i] = GetCellCount(filePath, meshNames[i]);
+            }
+            return cellCounts;
+        }
         public static int GetCellCount(string filePath, string meshName)
         {
             string hdfPathToData = ResultsDatasets.Unsteady.SummaryOutput.FlowAreas.MaxWaterSurface.Name(meshName);
@@ -42,7 +52,7 @@ namespace AEPGG.Model
             RASResults result = new(filePath);
             int featureCount = result.Geometry.D2FlowArea.FeatureCount();
             string[] names = new string[featureCount];
-            for(int i = 0; i < featureCount; i++)
+            for (int i = 0; i < featureCount; i++)
             {
                 names[i] = result.Geometry.D2FlowArea.GetFeatureName(i);
             }
