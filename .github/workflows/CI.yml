@@ -16,17 +16,13 @@ jobs:
 
     steps:
     - uses: actions/checkout@v3
+      with: 
+        submodules: true
+        token: ${{ secrets.NEXUS_READ }}
     - name: Setup .NET
       uses: actions/setup-dotnet@v3
       with:
         dotnet-version: 7.0.x
-    - name: update submodules
-      run: |
-        git config --global user.email "AEPGG@GitHub.com"
-        git config --global user.name "AEPGG"
-        git submodule update --init --recursive
-      env:
-        GITHUB_TOKEN: ${{ secrets.NEXUS_READ }}
     - name: Restore dependencies
       run: dotnet restore
     - name: Build
