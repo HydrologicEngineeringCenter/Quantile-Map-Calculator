@@ -21,7 +21,11 @@ jobs:
       with:
         dotnet-version: 7.0.x
     - name: update submodules
-      run: git submodule update --init --recursive
+      run: |
+        git config --global user.email "AEPGG@GitHub.com"\
+        git config --global user.name "AEPGG"
+        export GIT_TOKEN=${{ secrets.NEXUS_READ }}
+        git submodule update --init --recursive
     - name: Restore dependencies
       run: dotnet restore
     - name: Build
