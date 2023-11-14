@@ -6,12 +6,12 @@
         public float[] Probabilities { get;}
         public Histogram[]? Histograms { get; private set;} //Will need to do jagged array if we have multiple 2D areas later. 
         public float BinWidth { get; }
-        public int Range { get; }//This is the expected range of depths/vel/etc for a given cell.
-        public Project(string outputFilePath, float[] probabilities, float binWidth, int numBins)
+        public float Range { get; }//This is the expected range of depths/vel/etc for a given cell.
+        public Project(string outputFilePath, float[] probabilities, float binWidth, float range)
         {
             OutputFilePath = outputFilePath;
             Probabilities = probabilities;
-            Range = numBins;
+            Range = range;
             BinWidth = binWidth;
         }
         public void AddResults(IHydraulicResults result) 
