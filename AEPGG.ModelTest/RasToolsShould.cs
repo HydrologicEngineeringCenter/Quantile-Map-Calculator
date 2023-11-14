@@ -2,31 +2,40 @@ using AEPGG.Model;
 
 namespace AEPGG.ModelTest
 {
-    [Trait ("RunsOn", "Local")]
+    [Trait("RunsOn", "Local")]
     public class RasToolsShould
     {
-        private const string filePath = @"C:\Users\q0hecbbb\Projects\RAS Examples\HEC-RAS_64_Example_Projects\Example_Projects\2D Unsteady Flow Hydraulics\Muncie\Muncie.p04.hdf";
-        private const string meshName = @"2D Interior Area";
+        private const string filePath = @"..\..\..\Resources\Muncie.p04.hdf";
 
-        [Fact]
-        public void GetWSEsForAllNodes_ReturnsData()
+        [Theory]
+        [InlineData(true)]
+        [InlineData(false)]
+        public void GetWSEsForAllNodes_ReturnsData(bool getMax)
         {
-            var result = RasTools.GetMaxOrMinWSEForAll2DCells(filePath, meshName, true);
-            Assert.NotNull(result);
-            Assert.True(result.Length > 0);
-        }
-        [Fact]
-        public void GetMinWSEForAllNodes_ReturnsData()
-        {
-            var result = RasTools.GetMaxOrMinWSEForAll2DCells(filePath, meshName, false);
+            var result = RasTools.GetMaxOrMinWSEForAll2DCells(filePath, getMax);
             Assert.NotNull(result);
             Assert.True(result.Length > 0);
         }
         [Fact]
         public void GetCellCount_ReturnsPositiveValue()
         {
-            var result = RasTools.GetCellCount(filePath, meshName);
-            Assert.True(result > 0);
+            var result = RasTools.GetCellCount(filePath);
+            Assert.True(result[0] > 0);
+        }
+        [Fact]
+        public void IdentifyXS()
+        {
+            Assert.True(RasTools.ContainsXS(filePath));
+        }
+        [Fact]
+        public void IdentifySA()
+        {
+            Assert.False(RasTools.ContainsSA(filePath));
+        }
+        [Fact]
+        public void Identify2D()
+        {
+            Assert.True(RasTools.Contains2D(filePath));
         }
     }
 }
