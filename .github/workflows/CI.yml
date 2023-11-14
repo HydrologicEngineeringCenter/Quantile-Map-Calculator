@@ -22,7 +22,7 @@ jobs:
         dotnet-version: 7.0.x
     - name: update submodules
       run: |
-        git config --global user.email "AEPGG@GitHub.com"\
+        git config --global user.email "AEPGG@GitHub.com"
         git config --global user.name "AEPGG"
         git submodule update --init --recursive
       env:
