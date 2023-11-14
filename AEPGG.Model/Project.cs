@@ -1,10 +1,12 @@
-﻿namespace AEPGG.Model
+﻿using System.Diagnostics.CodeAnalysis;
+
+namespace AEPGG.Model
 {
     public class Project
     {
         public string OutputFilePath { get;}
         public float[] Probabilities { get;}
-        public Histogram[]? Histograms { get; private set;} //Will need to do jagged array if we have multiple 2D areas later. 
+        public Histogram[] Histograms { get; private set;} = Array.Empty<Histogram>();//Will need to do jagged array if we have multiple 2D areas later. 
         public float BinWidth { get; }
         public float Range { get; }//This is the expected range of depths/vel/etc for a given cell.
         public Project(string outputFilePath, float[] probabilities, float binWidth, float range)
@@ -16,12 +18,12 @@
         }
         public void AddResults(IHydraulicResults result) 
         {
-            if (Histograms == null)
+            if (Histograms.Length == 0)
                 InitializeHistograms(result);
             float[] data = result.MaxWSEs;
             for (int i = 0; i < data.Length; i++)
             {
-                Histograms[i].Add(data[i]);
+                Histograms![i].Add(data[i]);
             }
         }
         private void InitializeHistograms(IHydraulicResults result)

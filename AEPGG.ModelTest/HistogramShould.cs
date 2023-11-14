@@ -2,6 +2,7 @@
 
 namespace AEPGG.ModelTest
 {
+    [Trait("RunsOn", "Remote")]
     public class HistogramShould
     {
         [Fact]

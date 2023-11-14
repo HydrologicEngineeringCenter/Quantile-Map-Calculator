@@ -2,6 +2,7 @@ using AEPGG.Model;
 
 namespace AEPGG.ModelTest
 {
+    [Trait ("RunsOn", "Local")]
     public class RasToolsShould
     {
         private const string filePath = @"C:\Users\q0hecbbb\Projects\RAS Examples\HEC-RAS_64_Example_Projects\Example_Projects\2D Unsteady Flow Hydraulics\Muncie\Muncie.p04.hdf";
@@ -14,7 +15,6 @@ namespace AEPGG.ModelTest
             Assert.NotNull(result);
             Assert.True(result.Length > 0);
         }
-
         [Fact]
         public void GetMinWSEForAllNodes_ReturnsData()
         {
@@ -22,7 +22,6 @@ namespace AEPGG.ModelTest
             Assert.NotNull(result);
             Assert.True(result.Length > 0);
         }
-
         [Fact]
         public void GetCellCount_ReturnsPositiveValue()
         {
