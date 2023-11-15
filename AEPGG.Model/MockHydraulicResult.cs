@@ -5,9 +5,6 @@
         public int[] CellCounts2D => new int[] { 5 };
         public float[][] Max2DWSEs { get; }
         public float[][] Min2DWSEs { get; }
-        public static bool Has2D => true;
-        public static bool HasXS => false;
-        public static bool HasSA => false;
 
         public MockHydraulicResult(int multiplier)
         {

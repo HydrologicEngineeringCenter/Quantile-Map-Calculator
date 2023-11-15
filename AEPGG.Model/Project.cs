@@ -35,9 +35,26 @@
                 Histograms[i] = new(BinWidth, min, max);
             }
         }
-        public void SaveResults(string saveToFilePath)
+        private float[] GetResultsForAEP(float aep)
         {
-            throw new NotImplementedException();
+            float[] resultsForAEP = new float[Histograms.Length]; //1 x 2d area
+            for (int i = 0; i < Histograms.Length; i++) //1 x 2d area
+            {
+                resultsForAEP[i] = Histograms[i].InverseCDF(aep);
+            }
+            return resultsForAEP;
+        }
+        public void SaveResults()
+        {
+            float[] result = GetResultsForAEP(Probabilities[^1]);
+            var list = result.ToList();
+            list.Sort();
+            list.Reverse();
+            for(int i = 0; i < 5; i++)
+            {
+                Console.WriteLine(list[i]);
+            }
+            Console.WriteLine();
         }
     }
 }

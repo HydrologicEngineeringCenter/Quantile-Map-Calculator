@@ -25,13 +25,12 @@ namespace AEPGG.ModelTest
             {
                 histogram.Add(i);
             }
-            Assert.Equal(5, histogram.InverseCDF(.5f));
-            Assert.Equal(10, histogram.InverseCDF(.1f));
-            Assert.Equal(1, histogram.InverseCDF(.9f)); 
+            Assert.Equal(4.5, histogram.InverseCDF(.5f));
+            Assert.Equal(9.5, histogram.InverseCDF(.1f));
         }
 
         [Fact]
-        public void ReturnMaxValueForExceedenceProbabilityOutOfDataRange()
+        public void ReturnLastBinValueForExceedenceProbabilityTooSmall()
         {
               Histogram histogram = new(1, 0, 20);
             histogram.Add(.99f); // bin 0
@@ -39,8 +38,15 @@ namespace AEPGG.ModelTest
             {
                 histogram.Add(i);
             }
-            Assert.Equal(10, histogram.InverseCDF(.01f));
+            Assert.Equal(9.5, histogram.InverseCDF(.01f));
         }
-        
+        [Fact]
+        public void ReturnMinValueForElementsDryForAllEvents()
+        {
+            Histogram histogram = new(1, 0, 20);
+            histogram.Add(0f); // bin 0
+            Assert.Equal(0, histogram.InverseCDF(.01f));
+        }
+
     }
 }

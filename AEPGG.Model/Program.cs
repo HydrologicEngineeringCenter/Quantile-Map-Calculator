@@ -11,5 +11,6 @@ for (int i = 0; i < eventdirs.Length; i++)
 {
     proj.AddResults(new RasResultWrapper(eventdirs[i] + rasFilePath));
 }
+proj.SaveResults();
 Console.WriteLine("poopy");
 Console.ReadLine();
