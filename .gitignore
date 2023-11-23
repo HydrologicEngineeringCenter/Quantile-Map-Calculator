@@ -396,3 +396,4 @@ FodyWeavers.xsd
 
 # JetBrains Rider
 *.sln.iml
+AEPGG.ModelTest/Resources/MuncieTEMP.p04.hdf

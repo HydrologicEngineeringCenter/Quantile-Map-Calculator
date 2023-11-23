@@ -1,4 +1,6 @@
-﻿namespace AEPGG.Model
+﻿using System.Numerics;
+
+namespace AEPGG.Model
 {
     public class Project
     {
@@ -14,9 +16,11 @@
             Range = range;
             BinWidth = binWidth;
         }
+        
         public void AddResults(IHydraulicResults result) 
         {
-            if (Histograms.Length == 0)
+            if (Histograms.Length == 0) // Then this is the first result we are adding.
+                File.Copy(result.FilePath, OutputFilePath, true); // copy the first result over to the output directory. We'll use this as the starting point for our output file. 
                 InitializeHistograms(result);
             float[][] data = result.Max2DWSEs;
             for (int i = 0; i < data[0].Length; i++)//hard coding 1 2D area for now.
@@ -46,15 +50,28 @@
         }
         public void SaveResults()
         {
-            float[] result = GetResultsForAEP(Probabilities[^1]);
-            var list = result.ToList();
-            list.Sort();
-            list.Reverse();
-            for(int i = 0; i < 5; i++)
+            float[] result = GetResultsForAEP(Probabilities[^1]); //only using 1 AEP for now. 
+            DebugReport(result);
+            RasTools.OverwriteMaxWSEForAll2DCells(OutputFilePath, result);
+        }
+
+        private void DebugReport(float[] newMax)
+        {
+            float[] originalResults = RasTools.GetMaxOrMinWSEForAll2DCells(OutputFilePath, true)[0];
+            float[] Mins = RasTools.GetMaxOrMinWSEForAll2DCells(OutputFilePath, false)[0];
+            for (int i = 0; i < originalResults.Length; i++)
             {
-                Console.WriteLine(list[i]);
+                if (originalResults[i] != newMax[i])
+                {
+                    Console.WriteLine($" There was a change at index:{i}! OG: {originalResults[i]} New: {newMax[i]}");
+                }
+                if (newMax[i] < Mins[i])
+                {
+                    Console.WriteLine($" There's inundation at index:{i}! Min: {Mins[i]} New: {newMax[i]}");
+                }
+                
             }
-            Console.WriteLine();
+
         }
     }
 }

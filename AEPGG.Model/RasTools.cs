@@ -90,9 +90,9 @@ namespace AEPGG.Model
             {
                 hdfPathToData = ResultsDatasets.Unsteady.SummaryOutput.FlowAreas.MinWaterSurface.Name(meshName);
             }
-            return GetDataFromHDF(filePath, hdfPathToData);
+            return GetRowFromHDF(filePath, hdfPathToData, 0);
         }
-        private static float[] GetDataFromHDF(string filePath, string hdfPathToData, int rowID = 0)
+        private static float[] GetRowFromHDF(string filePath, string hdfPathToData, int rowID = 0)
         {
             float[] dataOut;
             using H5Reader hr = new(filePath);
@@ -104,6 +104,30 @@ namespace AEPGG.Model
                 dataOut[i] = data[rowID, (i)];
             }
             return dataOut;
+        }
+        private static void WriteDataToHDF(string filePath, string hdfPathToData, float[,] data) //will probably need to add a second row even when just doing the max WSE
+        {
+            using H5Writer hw = new(filePath);
+            hw.WriteDataset(hdfPathToData, data);
+        }
+        private static void OverwriteMaxWSEForAll2DCells(string filePath, string meshName, float[] data)
+        {
+            string hdfPathToData = ResultsDatasets.Unsteady.SummaryOutput.FlowAreas.MaxWaterSurface.Name(meshName);
+            float[,] dataWithTimeRow = new float[2, data.Length];
+            for (int i = 0; i < data.Length; i++)
+            {
+                dataWithTimeRow[0, i] = data[i]; //Max WSE
+                dataWithTimeRow[1, i] = 0; //Time of Max (Just bullshit for now)
+            }
+
+            WriteDataToHDF(filePath, hdfPathToData, dataWithTimeRow);
+        }
+        public static void OverwriteMaxWSEForAll2DCells(string filePath, float[] data)
+        {
+            foreach (string meshName in GetMeshNames(filePath))
+            {
+                OverwriteMaxWSEForAll2DCells(filePath, meshName, data);
+            }   
         }
         #endregion
     }

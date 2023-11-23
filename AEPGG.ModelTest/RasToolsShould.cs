@@ -1,4 +1,5 @@
 using AEPGG.Model;
+using Utility.Extensions;
 
 namespace AEPGG.ModelTest
 {
@@ -36,6 +37,19 @@ namespace AEPGG.ModelTest
         public void Identify2D()
         {
             Assert.True(RasTools.Contains2D(filePath));
+        }
+        [Fact]
+        public void OverwriteMaxWSE()
+        {
+            string newOutputFilePath = @"..\..\..\Resources\MuncieTEMP.p04.hdf" ;
+            File.Copy(filePath, newOutputFilePath, true);
+            int[] cellCounts = RasTools.GetCellCount(filePath);
+            float[] newWSEs = new float[cellCounts[0]];
+            newWSEs.Fill(9.0f);
+            RasTools.OverwriteMaxWSEForAll2DCells(newOutputFilePath, newWSEs);
+            float[][] result = RasTools.GetMaxOrMinWSEForAll2DCells(newOutputFilePath, true);
+            Assert.Equal(9.0f, result[0][0]);
+
         }
     }
 }
