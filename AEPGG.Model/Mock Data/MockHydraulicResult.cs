@@ -5,7 +5,7 @@
         public int[] CellCounts2D => new int[] { 5 };
         public float[][] Max2DWSEs { get; }
         public float[][] Min2DWSEs { get; }
-        public string FilePath => throw new NotImplementedException();
+        public string FilePath => Path.GetRandomFileName();
 
         public MockHydraulicResult(int multiplier)
         {

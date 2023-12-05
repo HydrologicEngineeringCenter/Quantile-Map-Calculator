@@ -19,9 +19,14 @@ namespace AEPGG.Model
         
         public void AddResults(IHydraulicResults result) 
         {
-            if (Histograms.Length == 0) // Then this is the first result we are adding.
-                File.Copy(result.FilePath, OutputFilePath, true); // copy the first result over to the output directory. We'll use this as the starting point for our output file. 
+            if (Histograms.Length == 0)
+            { // Then this is the first result we are adding, and it's a real result with a file.
+                if (File.Exists(result.FilePath))
+                {
+                    File.Copy(result.FilePath, OutputFilePath, true); // copy the first result over to the output directory. We'll use this as the starting point for our output file. 
+                } 
                 InitializeHistograms(result);
+            }
             float[][] data = result.Max2DWSEs;
             for (int i = 0; i < data[0].Length; i++)//hard coding 1 2D area for now.
             {
