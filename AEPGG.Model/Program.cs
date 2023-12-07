@@ -3,7 +3,7 @@
 string lifecycleDirectoryPath = "D:\\AEP Grid\\Muncie_WAT\\runs\\Without_Project_Conditions\\FRA_50yr\\realization 1\\lifecycle 1\\";
 string rasFilePath = "\\RAS\\Muncie.p08.hdf";
 string outputFilePath = "D:\\AEP Grid\\munciePartialResult.hdf";
-float[] theAEPs = new float[] { .99f, .5f, .2f, .1f, .02f };
+float[] theAEPs = [.99f, .5f, .2f, .1f, .02f];
 
 Project proj = new(outputFilePath, theAEPs, .5f, 20);
 string[] eventdirs = Directory.GetDirectories(lifecycleDirectoryPath);
