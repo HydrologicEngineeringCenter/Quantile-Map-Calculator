@@ -10,7 +10,11 @@ string[] eventdirs = Directory.GetDirectories(lifecycleDirectoryPath);
 
 for (int i = 0; i < eventdirs.Length; i++)
 {
-    proj.AddResults(new RasResultWrapper(eventdirs[i] + rasFilePath));
+    string rasFile = eventdirs[i] + rasFilePath;
+    if (File.Exists(rasFile))
+    {
+        proj.AddResults(new RasResultWrapper(rasFile));
+    }
 }
 proj.SaveResults();
 Console.WriteLine("poopy");
