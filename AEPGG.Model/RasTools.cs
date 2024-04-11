@@ -92,17 +92,13 @@ namespace AEPGG.Model
             }
             return GetRowFromHDF(filePath, hdfPathToData, 0);
         }
+
+        //probably faster to pull this H5 reader up a level and not reopen it very time we read a row. 
         private static float[] GetRowFromHDF(string filePath, string hdfPathToData, int rowID = 0)
         {
-            float[] dataOut;
+            float[] dataOut = null;
             using H5Reader hr = new(filePath);
-            hr.ReadDataset(hdfPathToData, out float[,] data);
-            int cellCount = data.GetLength(1);
-            dataOut = new float[cellCount];
-            for (int i = 0; i < cellCount; i++)
-            {
-                dataOut[i] = data[rowID, (i)];
-            }
+            hr.ReadRow(hdfPathToData, rowID, ref dataOut);
             return dataOut;
         }
         private static void WriteDataToHDF(string filePath, string hdfPathToData, float[,] data) //will probably need to add a second row even when just doing the max WSE
