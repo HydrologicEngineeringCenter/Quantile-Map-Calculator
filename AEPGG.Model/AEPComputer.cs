@@ -37,7 +37,6 @@ namespace AEPGG.Model
             }
         }
 
-
         /// <summary>
         /// Histograms initialize based on the minimum cell elevations in the first result, which are will be consistent across all results, the range of values expected for the WSE in a cell, and the bin width.
         /// </summary>

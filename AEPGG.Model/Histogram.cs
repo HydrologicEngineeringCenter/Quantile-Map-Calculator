@@ -35,7 +35,7 @@
             int numSamplesSoFar = 0;
             while (binExceedenceProb > exceedenceProbability)
             {
-                binIndex++;
+                binIndex++; //increment first
                 numSamplesSoFar += BinCounts[binIndex];
                 binExceedenceProb = 1f - ((float)numSamplesSoFar / NumSamples);
                 
