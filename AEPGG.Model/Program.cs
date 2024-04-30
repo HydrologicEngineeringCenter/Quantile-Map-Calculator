@@ -12,7 +12,7 @@ string[] eventdirs = Directory.GetDirectories(lifecycleDirectoryPath); //returns
 //initialize the computer
 string seedfile = eventdirs[0] + "\\" + rasFilePath;
 RasResultWrapper seedResult = new(seedfile);
-AEPComputer proj = new(seedResult, 0.25f,20f);
+AEPComputer computer = new(seedResult, 0.25f,20f);
 //copy the seed file to the output file
 File.Copy(seedfile, outputFilePath, true); 
 for (int i = 0; i < eventdirs.Length; i++)
@@ -21,8 +21,8 @@ for (int i = 0; i < eventdirs.Length; i++)
     if (File.Exists(rasFile))
     {
         RasResultWrapper rasResult = new(rasFile);
-        proj.AddResults(rasResult);
+        computer.AddResults(rasResult);
     }
 }
 
-AEPResultsWriter.OverwriteHDFResults(proj, outputFilePath, .01f);
+AEPResultsWriter.OverwriteHDFResults(computer, outputFilePath, .01f);
