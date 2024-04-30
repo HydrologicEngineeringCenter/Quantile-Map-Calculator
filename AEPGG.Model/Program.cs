@@ -5,9 +5,13 @@ string lifecycleDirectoryPath = "D:\\AEP Grid\\All2DMuncie\\Muncie_WAT\\runs\\Wi
 string rasFilePath = "RAS\\Muncie.p13.hdf";
 string outputFilePath = "D:\\AEP Grid\\munciePartialResult.hdf";
 float[] theAEPs = [.99f, .5f, .2f, .1f, .02f];
-
-Project proj = new(.5f, 20);
 string[] eventdirs = Directory.GetDirectories(lifecycleDirectoryPath); //returns directories without trailing "\\"
+
+//initialize the computer
+
+string seedfile = eventdirs[0] + "\\" + rasFilePath;
+RasResultWrapper seedResult = new(seedfile);
+AEPComputer proj = new(seedResult, 0.25f,20f);
 
 for (int i = 0; i < eventdirs.Length; i++)
 {
@@ -18,6 +22,7 @@ for (int i = 0; i < eventdirs.Length; i++)
         proj.AddResults(rasResult);
     }
 }
+
 
 Console.WriteLine("poopy");
 Console.ReadLine();

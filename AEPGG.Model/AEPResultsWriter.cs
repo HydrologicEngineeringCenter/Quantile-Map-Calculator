@@ -10,7 +10,7 @@ public static class AEPResultsWriter
     /// <param name="project"></param>
     /// <param name="outputFilePath"></param>
     /// <param name="AEP"></param>
-    public static void OverwriteHDFResults(Project project, string outputFilePath, float AEP)
+    public static void OverwriteHDFResults(AEPComputer project, string outputFilePath, float AEP)
     {
             float[][] result = project.GetResultsForAEP(AEP); //only using 1 AEP for now. 
             RasTools.OverwriteMaxWSEForAll2DCells(outputFilePath, result, project.Geometry.MeshNames);
