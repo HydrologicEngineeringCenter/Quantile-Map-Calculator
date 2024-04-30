@@ -11,7 +11,7 @@ namespace AEPGG.ModelTest
         [Fact]
         public void AddProperly()
         {
-            Project project = new(outFilePath, theAEPs, 0.5f, 100);
+            Project project = new( 0.5f, 100);
             project.AddResults(GetMockResults(1)[0]);
             Assert.Equal(1, project.Histograms[0][0].NumSamples); //We have a sample
         }
@@ -21,7 +21,7 @@ namespace AEPGG.ModelTest
         {
             int numPoints = 5000;
             IHydraulicResults[] mockResults = GetMockResults(numPoints);
-            Project project = new(outFilePath, theAEPs, 0.5f, 100);
+            Project project = new(0.5f, 100);
             foreach(var mockResult in mockResults)
             {
                 project.AddResults(mockResult);

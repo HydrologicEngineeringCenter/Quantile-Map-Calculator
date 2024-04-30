@@ -8,59 +8,39 @@ namespace AEPGG.Model
     public static class RasTools
     {
         #region RAS Results API
-        public static int[] GetCellCount(string filePath)
+        public static string[] GetMeshNames(RASGeometry geom)
         {
-            string[] meshNames = GetMeshNames(filePath);
-            int[] cellCounts = new int[meshNames.Length];
-            for (int i = 0; i < meshNames.Length; i++)
-            {
-                cellCounts[i] = GetCellCount(filePath, meshNames[i]);
-            }
-            return cellCounts;
-        }
-        public static int GetCellCount(string filePath, string meshName)
-        {
-            string hdfPathToData = ResultsDatasets.Unsteady.SummaryOutput.FlowAreas.MaxWaterSurface.Name(meshName);
-            using var hr = new H5Reader(filePath);
-            hr.ReadDataset(hdfPathToData, out float[,] data);
-            return data.GetLength(1);
-        }
-        public static string[] GetMeshNames(string filePath)
-        {
-            RASResults result = new(filePath);
-            int featureCount = result.Geometry.D2FlowArea.FeatureCount();
+            int featureCount = geom.D2FlowArea.FeatureCount();
             string[] names = new string[featureCount];
             for (int i = 0; i < featureCount; i++)
             {
-                names[i] = result.Geometry.D2FlowArea.GetFeatureName(i);
+                names[i] = geom.D2FlowArea.GetFeatureName(i);
             }
+            //Order matters here. The writer is going to depend on these being in the same order 
             return names;
         }
-        public static bool ContainsXS(string filePath)
+        public static bool ContainsXS(RASGeometry geom)
         {
-            RASResults result = new(filePath);
             bool hasXS = false;
-            if (result.Geometry.XS.FeatureCount() > 0)
+            if (geom.XS.FeatureCount() > 0)
             {
                 hasXS = true;
             }
             return hasXS;
         }
-        public static bool ContainsSA(string filePath)
+        public static bool ContainsSA(RASGeometry geom)
         {
-            RASResults result = new(filePath);
             bool hasSA = false;
-            if (result.Geometry.StorageArea.FeatureCount() > 0)
+            if (geom.StorageArea.FeatureCount() > 0)
             {
                 hasSA = true;
             }
             return hasSA;
         }
-        public static bool Contains2D(string filePath)
+        public static bool Contains2D(RASGeometry geom)
         {
-            RASResults result = new(filePath);
             bool has2D = false;
-            if (result.Geometry.D2FlowArea.FeatureCount() > 0)
+            if (geom.D2FlowArea.FeatureCount() > 0)
             {
                 has2D = true;
             }
@@ -69,9 +49,8 @@ namespace AEPGG.Model
         #endregion
 
         #region HDF File Access
-        public static float[][] GetMaxOrMinWSEForAll2DCells(string filePath, bool getMax)
+        public static float[][] GetMaxOrMinWSEForAll2DCells(string filePath, bool getMax, string[] meshNames)
         {
-            string[] meshNames = GetMeshNames(filePath);
             float[][] WSEs = new float[meshNames.Length][];
             for (int i = 0; i < meshNames.Length; i++)
             {
@@ -118,12 +97,12 @@ namespace AEPGG.Model
 
             WriteDataToHDF(filePath, hdfPathToData, dataWithTimeRow);
         }
-        public static void OverwriteMaxWSEForAll2DCells(string filePath, float[] data)
+        public static void OverwriteMaxWSEForAll2DCells(string filePath, float[][] data, string[] meshNames)
         {
-            foreach (string meshName in GetMeshNames(filePath))
+            for(int i = 0; i < meshNames.Length; i++)
             {
-                OverwriteMaxWSEForAll2DCells(filePath, meshName, data);
-            }   
+                OverwriteMaxWSEForAll2DCells(filePath, meshNames[i], data[i]);
+            }
         }
         #endregion
     }

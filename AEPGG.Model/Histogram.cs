@@ -1,6 +1,4 @@
-﻿using Utility.DataStructures;
-
-namespace AEPGG.Model
+﻿namespace AEPGG.Model
 {
     public class Histogram
     {
@@ -15,12 +13,21 @@ namespace AEPGG.Model
             BinWidth = binWidth;
             Min = min;
         }
-        public void Add(float value)
+        /// <summary>
+        /// Subtracts the minimum value of the histogram from the value, divides it by the bin width, then takes the floor of that to get the bin index before incrementing that bin and the <cref>NumSamples</cref>
+        /// </summary>
+        /// <param name="value"></param>
+        public void AddValue(float value)
         {
             int binIndex = (int)Math.Floor((value - Min) / BinWidth);
             BinCounts[binIndex]++;
             NumSamples++; 
         }
+        /// <summary>
+        /// returns the value of the histogram for the exceedence probability specified. Ex. .01 would return the 100 Year return interval WSE
+        /// </summary>
+        /// <param name="exceedenceProbability"></param>
+        /// <returns></returns>
         public float InverseCDF(float exceedenceProbability)
         {
             int binIndex = -1; // start at -1 because we increment before checking

@@ -1,21 +1,23 @@
 ﻿using AEPGG.Model;
 
-string lifecycleDirectoryPath = "D:\\AEP Grid\\Muncie_WAT\\runs\\Without_Project_Conditions\\FRA_50yr\\realization 1\\lifecycle 1\\";
-string rasFilePath = "\\RAS\\Muncie.p08.hdf";
+//Hard coded to local data. too big to upload to github. 
+string lifecycleDirectoryPath = "D:\\AEP Grid\\All2DMuncie\\Muncie_WAT\\runs\\Without_Project_Conditions\\FRA_50yr\\realization 1\\lifecycle 1\\";
+string rasFilePath = "RAS\\Muncie.p13.hdf";
 string outputFilePath = "D:\\AEP Grid\\munciePartialResult.hdf";
 float[] theAEPs = [.99f, .5f, .2f, .1f, .02f];
 
-Project proj = new(outputFilePath, theAEPs, .5f, 20);
-string[] eventdirs = Directory.GetDirectories(lifecycleDirectoryPath);
+Project proj = new(.5f, 20);
+string[] eventdirs = Directory.GetDirectories(lifecycleDirectoryPath); //returns directories without trailing "\\"
 
 for (int i = 0; i < eventdirs.Length; i++)
 {
-    string rasFile = eventdirs[i] + rasFilePath;
+    string rasFile = eventdirs[i] + "\\" + rasFilePath;
     if (File.Exists(rasFile))
     {
-        proj.AddResults(new RasResultWrapper(rasFile));
+        RasResultWrapper rasResult = new(rasFile);
+        proj.AddResults(rasResult);
     }
 }
-proj.SaveResults();
+
 Console.WriteLine("poopy");
 Console.ReadLine();
