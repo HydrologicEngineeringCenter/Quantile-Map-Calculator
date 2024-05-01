@@ -11,9 +11,5 @@
 	  <PackageReference Include="Ras.Core" Version="1.0.845-beta" />
 	  <PackageReference Include="Ras.Mapper" Version="1.0.845-beta" />
 	</ItemGroup>
-
-	<ItemGroup>
-	  <Folder Include="NewFolder\" />
-	</ItemGroup>
 	
 </Project>

@@ -1,5 +1,6 @@
 ﻿using AEPGG.Model;
 using AEPGG.Model.Interfaces;
+using AEPGG.ModelTest.Mock_Data;
 
 namespace AEPGG.ModelTest
 {
@@ -12,8 +13,9 @@ namespace AEPGG.ModelTest
         [Fact]
         public void AddProperly()
         {
+            MockRasGeometryWrapper mockRasGeometryWrapper = new(false, false, true, ["fake"]);
             MockHydraulicResult mockHydraulicResult = new(1);
-            AEPComputer project = new(mockHydraulicResult, 0.5f, 100);
+            AEPComputer project = new(mockHydraulicResult, 0.5f, 100, mockRasGeometryWrapper);
             project.AddResults(GetMockResults(1)[0]);
             Assert.Equal(1, project.Histograms2DAreas[0][0].NumSamples); //We have a sample
         }
@@ -21,9 +23,10 @@ namespace AEPGG.ModelTest
         [Fact]
         public void AddLotsProperly()
         {
+            MockRasGeometryWrapper mockRasGeometryWrapper = new(false, false, true, ["fake"]);
             int numResults = 5000;
             IHydraulicResults[] mockResults = GetMockResults(numResults);
-            AEPComputer project = new(mockResults[0], 0.5f, 100);
+            AEPComputer project = new(mockResults[0], 0.5f, 100, mockRasGeometryWrapper);
             foreach(var mockResult in mockResults)
             {
                 project.AddResults(mockResult);

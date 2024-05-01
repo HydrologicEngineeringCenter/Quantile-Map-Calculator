@@ -20,14 +20,24 @@ namespace AEPGG.Model
             }   
         }
 
-        float[][] IHydraulicResults.GetMax2DWSE(string[] meshNames)
+        public float[][] GetMax2DWSE(string[] meshNames)
         {
             return Max2DWSEs;
         }
 
-        float[][] IHydraulicResults.GetMin2DWSE(string[] meshNames)
+        public float[][] GetMin2DWSE(string[] meshNames)
         {
             return Min2DWSEs;
+        }
+
+        public float[] GetMaxXSWSE()
+        {
+            throw new NotImplementedException();
+        }
+
+        public float[] GetMinXSWSE()
+        {
+            throw new NotImplementedException();
         }
     }
 }

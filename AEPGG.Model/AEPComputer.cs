@@ -16,17 +16,25 @@ namespace AEPGG.Model
 
         /// <summary>
         /// contains the geometry of the model which does not change between results in a single compute.
+        /// setter remains public for testing purposes.
         /// </summary>
-        private RasGeometryWrapper Geometry { get; }
+        public IGeometry Geometry { get; set; }
 
         /// <summary>
         /// Project contains the jagged arryas of results histograms, the settings for those histograms, and the 
         /// </summary>
         /// <param name="binWidth"></param>
         /// <param name="range"></param>
-        public AEPComputer(IHydraulicResults result, float binWidth, float range)
+        public AEPComputer(IHydraulicResults result, float binWidth, float range, IGeometry mockGeometry = null)
         {
-            Geometry = new(result.FilePath);
+            if(mockGeometry != null)
+            {
+                Geometry = mockGeometry;
+            }
+            else
+            {
+                Geometry = new RasGeometryWrapper(result.FilePath);
+            }
             InitializeHistograms(result, range, binWidth);
         }
 

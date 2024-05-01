@@ -1,8 +1,9 @@
-﻿using RasMapperLib;
+﻿using AEPGG.Model.Interfaces;
+using RasMapperLib;
 
 namespace AEPGG.Model;
 
-public class RasGeometryWrapper
+public class RasGeometryWrapper: IGeometry
 {
     public bool HasXSs {get;}
     public bool HasSAs { get; }
@@ -11,6 +12,10 @@ public class RasGeometryWrapper
     public RasGeometryWrapper(string filename)
     {
         RASResults result = new(filename);
+        if (!result.ContainsData)
+        {
+            throw new ArgumentException("invalid results file");
+        }
         RASGeometry Geometry = result.Geometry;
         HasXSs = RasTools.ContainsXS(Geometry);
         HasSAs = RasTools.ContainsSA(Geometry);
