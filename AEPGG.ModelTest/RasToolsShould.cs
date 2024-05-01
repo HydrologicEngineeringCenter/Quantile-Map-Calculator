@@ -53,7 +53,28 @@ namespace AEPGG.ModelTest
             RasTools.OverwriteMaxWSEForAll2DCells(newOutputFilePath, newWSEs, meshNames);
             float[][] result = RasTools.GetMaxOrMinWSEForAll2DCells(newOutputFilePath, true, meshNames);
             Assert.Equal(9.0f, result[0][0]);
+        }
 
+        [Fact]
+        public void GetMaxWSEForAllXS_ShouldReturnData()
+        {
+            // Act
+            float[] result = RasTools.GetMaxWSEForAllXS(filePath);
+
+            // Assert
+            Assert.NotNull(result);
+            Assert.NotEmpty(result);
+        }
+
+        [Fact]
+        public void GetMinWSEForAllXS_ShouldReturnData()
+        {
+            // Act
+            float[] result = RasTools.GetMinWSEForAllXS(filePath);
+
+            // Assert
+            Assert.NotNull(result);
+            Assert.NotEmpty(result);
         }
     }
 }

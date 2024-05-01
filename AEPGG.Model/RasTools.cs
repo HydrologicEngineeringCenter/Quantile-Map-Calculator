@@ -106,6 +106,26 @@ namespace AEPGG.Model
             }
         }
 
+
+
+        /// <param name="filePath"> must have .hdf extension</param>
+        public static float[] GetMaxWSEForAllXS(string filePath)
+        {
+            string hdfPathToData = ResultsDatasets.Unsteady.SummaryOutput.CrossSections.MaxWaterSurface.Name;
+            float[] data = GetRowFromHDF(filePath, hdfPathToData, 0);
+            return data;
+        }
+
+        /// <param name="filePath"> must have .hdf extension</param>
+        public static float[] GetMinWSEForAllXS(string filePath)
+        {
+            string hdfPathToData = ResultsDatasets.Unsteady.SummaryOutput.CrossSections.MinWaterSurface.Name;
+            float[] data = GetRowFromHDF(filePath, hdfPathToData, 0);
+            return data;
+        }
+
+
+        #region I'm suspcious of this strategy. This isn't fleshed out. 
         /// <summary> Overwrites the water surface elevation in the results timeseries with a single profile for each of the specified meshes </summary>
         /// <param name="data">[2D Area Index][Cell Index]</param>
         public static void OverwriteSingleProfile(string filePath, string[] meshNames, float[][] data)
@@ -128,22 +148,7 @@ namespace AEPGG.Model
             }
             WriteDataToHDF(filePath, hdfPathToData, dataTable);
         }
-
-        /// <param name="filePath"> must have .hdf extension</param>
-        public static float[] GetMaxWSEForAllXS(string filePath)
-        {
-            string hdfPathToData = ResultsDatasets.Unsteady.SummaryOutput.CrossSections.MaxWaterSurface.Name;
-            float[] data = GetRowFromHDF(filePath, hdfPathToData, 0);
-            return data;
-        }
-
-        /// <param name="filePath"> must have .hdf extension</param>
-        public static float[] GetMinWSEForAllXS(string filePath)
-        {
-            string hdfPathToData = ResultsDatasets.Unsteady.SummaryOutput.CrossSections.MinWaterSurface.Name;
-            float[] data = GetRowFromHDF(filePath, hdfPathToData, 0);
-            return data;
-        }
+        #endregion
 
         #endregion
     }
