@@ -80,7 +80,7 @@ namespace AEPGG.Model
             hr.ReadRow(hdfPathToData, rowID, ref dataOut);
             return dataOut;
         }
-        private static void WriteDataToHDF(string filePath, string hdfPathToData, float[,] data) //will probably need to add a second row even when just doing the max WSE
+        private static void WriteDataToHDF(string filePath, string hdfPathToData, float[,] data) 
         {
             using H5Writer hw = new(filePath);
             hw.WriteDataset(hdfPathToData, data);
@@ -94,7 +94,6 @@ namespace AEPGG.Model
                 dataWithTimeRow[0, i] = data[i]; //Max WSE
                 dataWithTimeRow[1, i] = 0; //Time of Max (Just bullshit for now)
             }
-
             WriteDataToHDF(filePath, hdfPathToData, dataWithTimeRow);
         }
         public static void OverwriteMaxWSEForAll2DCells(string filePath, float[][] data, string[] meshNames)
@@ -103,6 +102,38 @@ namespace AEPGG.Model
             {
                 OverwriteMaxWSEForAll2DCells(filePath, meshNames[i], data[i]);
             }
+        }
+
+
+
+        /// <summary>
+        /// Overwrites the water surface elevation in the results timeseries with a single profile for each of the specified meshes
+        /// </summary>
+        /// <param name="filePath"></param>
+        /// <param name="meshNames"></param>
+        /// <param name="data">[2D Area Index][Cell Index]</param>
+        public static void OverwriteSingleProfile(string filePath, string[] meshNames, float[][] data)
+        {
+            for (int i = 0; i < meshNames.Length; i++)
+            {
+                OverwriteSingleProfile(filePath, meshNames[i], data[i]);
+            }
+        }
+
+        /// <summary>
+        /// </summary>
+        /// <param name="filePath"></param>
+        /// <param name="meshName"></param>
+        /// <param name="data"> [Cell Index] </param>
+        private static void OverwriteSingleProfile(string filePath, string meshName, float[] data)
+        {
+            string hdfPathToData = ResultsDatasets.Unsteady.TimeSeriesOutput.FlowAreas.WaterSurface(meshName);
+            float[,] dataTable = new float[1, data.Length];// write method re
+            for (int i = 0; i < data.Length; i++)
+            {
+                dataTable[0, i] = data[i]; //Max WSE
+            }
+            WriteDataToHDF(filePath, hdfPathToData, dataTable);
         }
         #endregion
     }

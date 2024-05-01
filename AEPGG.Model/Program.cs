@@ -25,4 +25,6 @@ for (int i = 0; i < eventdirs.Length; i++)
     }
 }
 
-AEPResultsWriter.OverwriteHDFResults(computer, outputFilePath, .01f);
+AEPResultsWriter writer = new(outputFilePath);
+bool success = writer.OverwriteTimeseriesInHDFResults(computer, .04f); // .04 = 25yr event
+Console.WriteLine(success);
