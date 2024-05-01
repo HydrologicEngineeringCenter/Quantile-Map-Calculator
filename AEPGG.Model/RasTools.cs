@@ -73,6 +73,7 @@ namespace AEPGG.Model
         }
 
         //probably faster to pull this H5 reader up a level and not reopen it very time we read a row. 
+        /// <param name="rowID"> typically 0 for Max WSE from MaxWSE records</param>
         private static float[] GetRowFromHDF(string filePath, string hdfPathToData, int rowID = 0)
         {
             float[] dataOut = null;
@@ -80,6 +81,7 @@ namespace AEPGG.Model
             hr.ReadRow(hdfPathToData, rowID, ref dataOut);
             return dataOut;
         }
+        //probably faster to pull this H5 writer up a level and not reopen it very time we read a row. 
         private static void WriteDataToHDF(string filePath, string hdfPathToData, float[,] data) 
         {
             using H5Writer hw = new(filePath);
@@ -104,13 +106,7 @@ namespace AEPGG.Model
             }
         }
 
-
-
-        /// <summary>
-        /// Overwrites the water surface elevation in the results timeseries with a single profile for each of the specified meshes
-        /// </summary>
-        /// <param name="filePath"></param>
-        /// <param name="meshNames"></param>
+        /// <summary> Overwrites the water surface elevation in the results timeseries with a single profile for each of the specified meshes </summary>
         /// <param name="data">[2D Area Index][Cell Index]</param>
         public static void OverwriteSingleProfile(string filePath, string[] meshNames, float[][] data)
         {
@@ -120,10 +116,7 @@ namespace AEPGG.Model
             }
         }
 
-        /// <summary>
-        /// </summary>
-        /// <param name="filePath"></param>
-        /// <param name="meshName"></param>
+        /// <summary> Overwrites the water surface elevation in the results timeseries with a single profile for a single mesh </summary>
         /// <param name="data"> [Cell Index] </param>
         private static void OverwriteSingleProfile(string filePath, string meshName, float[] data)
         {
@@ -135,6 +128,23 @@ namespace AEPGG.Model
             }
             WriteDataToHDF(filePath, hdfPathToData, dataTable);
         }
+
+        /// <param name="filePath"> must have .hdf extension</param>
+        public static float[] GetMaxWSEForAllXS(string filePath)
+        {
+            string hdfPathToData = ResultsDatasets.Unsteady.SummaryOutput.CrossSections.MaxWaterSurface.Name;
+            float[] data = GetRowFromHDF(filePath, hdfPathToData, 0);
+            return data;
+        }
+
+        /// <param name="filePath"> must have .hdf extension</param>
+        public static float[] GetMinWSEForAllXS(string filePath)
+        {
+            string hdfPathToData = ResultsDatasets.Unsteady.SummaryOutput.CrossSections.MinWaterSurface.Name;
+            float[] data = GetRowFromHDF(filePath, hdfPathToData, 0);
+            return data;
+        }
+
         #endregion
     }
 }

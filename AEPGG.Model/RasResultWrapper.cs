@@ -1,6 +1,4 @@
-﻿using Amazon.S3.Model;
-using RasMapperLib;
-using System.Reflection.Metadata.Ecma335;
+﻿using AEPGG.Model.Interfaces;
 
 namespace AEPGG.Model
 {
@@ -20,6 +18,14 @@ namespace AEPGG.Model
         public float[][] GetMin2DWSE(string[] meshNames )
         {
             return RasTools.GetMaxOrMinWSEForAll2DCells(FilePath, false, meshNames);
+        }
+        public float[] GetMaxXSWSE()
+        {
+            return RasTools.GetMaxWSEForAllXS(FilePath);
+        }
+        public float[] GetMinXSWSE()
+        {
+            return RasTools.GetMinWSEForAllXS(FilePath);
         }
 
 

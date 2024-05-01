@@ -4,15 +4,20 @@ namespace AEPGG.Model;
 
 public class RasGeometryWrapper
 {
-    public readonly RASGeometry Geometry;
-    public bool HasXSs => RasTools.ContainsXS(Geometry);
-    public bool HasSAs => RasTools.ContainsSA(Geometry);
-    public bool Has2Ds => RasTools.Contains2D(Geometry);
-    public string[] MeshNames => RasTools.GetMeshNames(Geometry);
-
+    public bool HasXSs {get;}
+    public bool HasSAs { get; }
+    public bool Has2Ds { get; }
+    public string[] MeshNames { get; }
     public RasGeometryWrapper(string filename)
     {
         RASResults result = new(filename);
-        Geometry = result.Geometry;
+        RASGeometry Geometry = result.Geometry;
+        HasXSs = RasTools.ContainsXS(Geometry);
+        HasSAs = RasTools.ContainsSA(Geometry);
+        Has2Ds = RasTools.Contains2D(Geometry);
+        if(Has2Ds)
+        {
+            MeshNames = RasTools.GetMeshNames(Geometry);
+        }
     }
 }

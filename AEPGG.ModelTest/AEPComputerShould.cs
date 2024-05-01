@@ -1,4 +1,5 @@
 ﻿using AEPGG.Model;
+using AEPGG.Model.Interfaces;
 
 namespace AEPGG.ModelTest
 {
@@ -14,7 +15,7 @@ namespace AEPGG.ModelTest
             MockHydraulicResult mockHydraulicResult = new(1);
             AEPComputer project = new(mockHydraulicResult, 0.5f, 100);
             project.AddResults(GetMockResults(1)[0]);
-            Assert.Equal(1, project.Histograms[0][0].NumSamples); //We have a sample
+            Assert.Equal(1, project.Histograms2DAreas[0][0].NumSamples); //We have a sample
         }
 
         [Fact]
@@ -27,9 +28,9 @@ namespace AEPGG.ModelTest
             {
                 project.AddResults(mockResult);
             }
-            Assert.Equal(5, project.Histograms[0].Length);
-            Assert.Equal(project.Histograms[0][0].NumSamples, numResults);
-            float valueOfThe100yr = project.Histograms[0][0].InverseCDF(.01f);
+            Assert.Equal(5, project.Histograms2DAreas[0].Length);
+            Assert.Equal(project.Histograms2DAreas[0][0].NumSamples, numResults);
+            float valueOfThe100yr = project.Histograms2DAreas[0][0].InverseCDF(.01f);
             Assert.True(valueOfThe100yr > 5);
         }
 

@@ -1,4 +1,6 @@
-﻿namespace AEPGG.Model
+﻿using AEPGG.Model.Interfaces;
+
+namespace AEPGG.Model
 {
     public class MockHydraulicResult:IHydraulicResults
     {
