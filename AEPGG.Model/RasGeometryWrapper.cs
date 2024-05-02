@@ -12,9 +12,9 @@ public class RasGeometryWrapper: IGeometry
     public RasGeometryWrapper(string filename)
     {
         RASResults result = new(filename);
-        if (!result.ContainsData)
+        if (!result.RanSuccessfully)  //RASResults always constructs, even with a fake file. Really I just want to see that it loaded properly.
         {
-            throw new ArgumentException("invalid results file");
+            throw new Exception("invalid results file");
         }
         RASGeometry Geometry = result.Geometry;
         HasXSs = RasTools.ContainsXS(Geometry);

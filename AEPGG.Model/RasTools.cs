@@ -106,8 +106,6 @@ namespace AEPGG.Model
             }
         }
 
-
-
         /// <param name="filePath"> must have .hdf extension</param>
         public static float[] GetMaxWSEForAllXS(string filePath)
         {
@@ -122,6 +120,20 @@ namespace AEPGG.Model
             string hdfPathToData = ResultsDatasets.Unsteady.SummaryOutput.CrossSections.MinWaterSurface.Name;
             float[] data = GetRowFromHDF(filePath, hdfPathToData, 0);
             return data;
+        }
+
+        /// <param name="filePath"> must have .hdf extension</param>
+        public static void OverwriteMaxWSEforAllXs(string filePath, float[] data)
+        {
+            string hdfPathToData = ResultsDatasets.Unsteady.SummaryOutput.CrossSections.MaxWaterSurface.Name;
+            float[,] dataTable = new float[3, data.Length];
+            for (int i = 0; i < data.Length; i++)
+            {
+                dataTable[0, i] = data[i]; //Max WSE
+                dataTable[1,i] = 0; //Flow at Max (Just bullshit for now)
+                dataTable[2,i] = 0; //Time of Max (Just bullshit for now)
+            }
+            WriteDataToHDF(filePath, hdfPathToData, dataTable);
         }
 
 

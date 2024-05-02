@@ -27,7 +27,7 @@ namespace AEPGG.Model
         /// <param name="range"></param>
         public AEPComputer(IHydraulicResults result, float binWidth, float range, IGeometry mockGeometry = null)
         {
-            if(mockGeometry != null)
+            if (mockGeometry != null)
             {
                 Geometry = mockGeometry;
             }
@@ -40,15 +40,15 @@ namespace AEPGG.Model
 
         public void AddResults(IHydraulicResults result)
         {
-            if(Geometry.Has2Ds)
+            if (Geometry.Has2Ds)
             {
                 AddResuls2D(result);
-            }  
-            if(Geometry.HasXSs)
+            }
+            if (Geometry.HasXSs)
             {
                 AddResultsXS(result);
             }
-            if(Geometry.HasSAs)
+            if (Geometry.HasSAs)
             {
                 throw new NotImplementedException("Haven't bothered with SA's yet");
             }
@@ -125,12 +125,10 @@ namespace AEPGG.Model
             }
         }
 
-        /// <summary>
-        /// returns the WSE for each cell in each 2D area for the specified AEP. [2D Area Index][Cell Index]
-        /// </summary>
-        /// <param name="aep"></param>
-        /// <returns></returns>
-        public float[][] GetResultsForAEP(float aep)
+
+        /// <param name="aep"> an annual Exceedence Probability </param>
+        /// <returns> returns the WSE for each cell in each 2D area for the specified AEP. [2D Area Index][Cell Index]</returns>
+        public float[][] GetResultsForAEP2D(float aep)
         {
             float[][] resultsForAEP = new float[Histograms2DAreas.Length][];
             for (int i = 0; i < Histograms2DAreas.Length; i++) //for each 2D area
@@ -141,6 +139,19 @@ namespace AEPGG.Model
                     resultsForAEP[i][j] = Histograms2DAreas[i][j].InverseCDF(aep);
                 }
             }
+            return resultsForAEP;
+        }
+
+        /// <param name="aep"> an annual Exceedence Probability </param>
+        /// <returns> returns the WSE for each cell in each 2D area for the specified AEP. [XS Index]</returns>
+        public float[] GetResultsForAEPXS(float aep)
+        {
+            float[] resultsForAEP = new float[HistogramsXS.Length];
+            for (int i = 0; i < HistogramsXS.Length; i++) //for each cell in the 2D area
+            {
+                resultsForAEP[i] = HistogramsXS[i].InverseCDF(aep);
+            }
+
             return resultsForAEP;
         }
 

@@ -23,23 +23,40 @@ public class AEPResultsWriter
     /// <param name="AEP"></param>
     public bool OverwriteMaxWSEinHDFResults(AEPComputer project, float AEP)
     {
-        bool sucess = false;
         if (File.Exists(OutputFilePath) && Path.GetExtension(OutputFilePath) == "hdf")
         {
-            float[][] result = project.GetResultsForAEP(AEP); //only using 1 AEP for now. 
-            RasTools.OverwriteMaxWSEForAll2DCells(OutputFilePath, result, project.Geometry.MeshNames);
-            sucess = true;
+            return false;
         }
-        return sucess;
-
+        if (project.Geometry.Has2Ds)
+        {
+            float[][] result = project.GetResultsForAEP2D(AEP); //only using 1 AEP for now. 
+            RasTools.OverwriteMaxWSEForAll2DCells(OutputFilePath, result, project.Geometry.MeshNames);
+        }
+        if (project.Geometry.HasXSs)
+        {
+            float[] result = project.GetResultsForAEPXS(AEP);
+            RasTools.OverwriteMaxWSEforAllXs(OutputFilePath, result);
+        }
+        if(project.Geometry.HasSAs)
+        {
+            throw new NotImplementedException("Haven't bothered with SA's yet");
+        }
+        return true;
     }
 
+    /// <summary>
+    /// overwrites the timeseries data in the HEC-RAS result file with the results from the project for the specified AEP. Project must have results. Output file must have a matching geometry to the project.
+    /// </summary>
+    /// <param name="project"></param>
+    /// <param name="AEP"></param>
+    /// <param name="geom"></param>
+    /// <returns></returns>
     public bool OverwriteTimeseriesInHDFResults(AEPComputer project, float AEP)
     {
         bool sucess = false;
         if (File.Exists(OutputFilePath) && Path.GetExtension(OutputFilePath).Equals(".hdf"))
         {
-            float[][] results = project.GetResultsForAEP(AEP);
+            float[][] results = project.GetResultsForAEP2D(AEP);
             RasTools.OverwriteSingleProfile(OutputFilePath, project.Geometry.MeshNames, results );
             sucess = true;
         }
