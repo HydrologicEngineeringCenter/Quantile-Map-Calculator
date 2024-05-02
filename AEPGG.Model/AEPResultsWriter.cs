@@ -23,7 +23,7 @@ public class AEPResultsWriter
     /// <param name="AEP"></param>
     public bool OverwriteMaxWSEinHDFResults(AEPComputer project, float AEP)
     {
-        if (File.Exists(OutputFilePath) && Path.GetExtension(OutputFilePath) == "hdf")
+        if (!File.Exists(OutputFilePath) && !(Path.GetExtension(OutputFilePath) == ".hdf"))
         {
             return false;
         }
@@ -47,20 +47,27 @@ public class AEPResultsWriter
     /// <summary>
     /// overwrites the timeseries data in the HEC-RAS result file with the results from the project for the specified AEP. Project must have results. Output file must have a matching geometry to the project.
     /// </summary>
-    /// <param name="project"></param>
-    /// <param name="AEP"></param>
-    /// <param name="geom"></param>
-    /// <returns></returns>
     public bool OverwriteTimeseriesInHDFResults(AEPComputer project, float AEP)
     {
-        bool sucess = false;
-        if (File.Exists(OutputFilePath) && Path.GetExtension(OutputFilePath).Equals(".hdf"))
-        {
-            float[][] results = project.GetResultsForAEP2D(AEP);
-            RasTools.H5WriterTools.OverwriteSingleProfile(OutputFilePath, project.Geometry.MeshNames, results );
-            sucess = true;
+        if (!File.Exists(OutputFilePath) && !(Path.GetExtension(OutputFilePath) == ".hdf"))
+        { 
+            return false;
         }
-        return sucess;
+        if (project.Geometry.Has2Ds)
+        {
+            float[][] result = project.GetResultsForAEP2D(AEP); //only using 1 AEP for now. 
+            RasTools.H5WriterTools.OverwriteSingleProfile2D(OutputFilePath, project.Geometry.MeshNames, result,0);
+        }
+        if (project.Geometry.HasXSs)
+        {
+            float[] result = project.GetResultsForAEPXS(AEP);
+            RasTools.H5WriterTools.OverwriteSingleProfileXS(OutputFilePath, result,0);
+        }
+        if (project.Geometry.HasSAs)
+        {
+            throw new NotImplementedException("Haven't bothered with SA's yet");
+        }
+        return true;
     }
 
 }

@@ -1,4 +1,6 @@
 using AEPGG.Model.RasTools;
+using H5Assist;
+using Ras.Layers;
 using RasMapperLib;
 using Utility.Extensions;
 
@@ -75,6 +77,29 @@ namespace AEPGG.ModelTest
             // Assert
             Assert.NotNull(result);
             Assert.NotEmpty(result);
+        }
+
+        [Fact]
+        public void OverwriteSingleTimestepWS()
+        {
+            // Arrange
+            string newOutputFilePath = @"..\..\..\Resources\MuncieTEMP.p04.hdf";
+            File.Copy(filePath, newOutputFilePath, true);
+            float[][] currentWSEs = H5ReaderTools.GetMaxOrMinWSEForAll2DCells(newOutputFilePath,true,meshNames);
+            float[][] newWSEs = (float[][])currentWSEs.Clone();
+            for (int i = 0; i < newWSEs[0].Length; i++)
+            {
+                newWSEs[0][i] = 9.0f;
+            }
+
+            // Act
+            H5WriterTools.OverwriteSingleProfile2D(newOutputFilePath,meshNames, newWSEs,0);
+            using H5Reader h5Reader = new(newOutputFilePath);
+            float[,] result = null;
+                h5Reader.ReadRow(ResultsDatasets.Unsteady.TimeSeriesOutput.FlowAreas.WaterSurface(meshNames[0]), 0,ref result);
+
+            // Assert
+            Assert.Equal(9.0f, result[0,0]);
         }
     }
 }
