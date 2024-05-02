@@ -6,6 +6,11 @@ namespace AEPGG.Model.RasTools;
 public static class H5ReaderTools
 {
 
+
+    /// <param name="filePath"> An HEC-RAS 6.x HDF file</param>
+    /// <param name="getMax"> true gets max, false gets min</param>
+    /// <param name="meshNames" 2D Area Names</param>
+    /// <returns>WSEs [2D Area Index][Cell Index]</returns>
     public static float[][] GetMaxOrMinWSEForAll2DCells(string filePath, bool getMax, string[] meshNames)
     {
         float[][] WSEs = new float[meshNames.Length][];
@@ -15,7 +20,9 @@ public static class H5ReaderTools
         }
         return WSEs;
     }
-    public static float[] GetMaxOrMinWSEForAll2DCells(string filePath, string meshName, bool getMax)
+
+
+    private static float[] GetMaxOrMinWSEForAll2DCells(string filePath, string meshName, bool getMax)
     {
         string hdfPathToData;
         if (getMax)

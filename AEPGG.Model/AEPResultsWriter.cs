@@ -29,7 +29,7 @@ public class AEPResultsWriter
         }
         if (project.Geometry.Has2Ds)
         {
-            float[][] result = project.GetResultsForAEP2D(AEP); //only using 1 AEP for now. 
+            float[][] result = project.GetResultsForAEP2D(AEP); //only using 1 AEP.
             RasTools.H5WriterTools.OverwriteMaxWSEForAll2DCells(OutputFilePath, result, project.Geometry.MeshNames);
         }
         if (project.Geometry.HasXSs)
