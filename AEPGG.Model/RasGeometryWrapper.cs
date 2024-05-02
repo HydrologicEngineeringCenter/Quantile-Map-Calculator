@@ -17,12 +17,12 @@ public class RasGeometryWrapper: IGeometry
             throw new Exception("invalid results file");
         }
         RASGeometry Geometry = result.Geometry;
-        HasXSs = RasTools.ContainsXS(Geometry);
-        HasSAs = RasTools.ContainsSA(Geometry);
-        Has2Ds = RasTools.Contains2D(Geometry);
+        HasXSs = RasTools.RASResultsTools.ContainsXS(Geometry);
+        HasSAs = RasTools.RASResultsTools.ContainsSA(Geometry);
+        Has2Ds = RasTools.RASResultsTools.Contains2D(Geometry);
         if(Has2Ds)
         {
-            MeshNames = RasTools.GetMeshNames(Geometry);
+            MeshNames = RasTools.RASResultsTools.GetMeshNames(Geometry);
         }
     }
 }

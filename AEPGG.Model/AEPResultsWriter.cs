@@ -30,12 +30,12 @@ public class AEPResultsWriter
         if (project.Geometry.Has2Ds)
         {
             float[][] result = project.GetResultsForAEP2D(AEP); //only using 1 AEP for now. 
-            RasTools.OverwriteMaxWSEForAll2DCells(OutputFilePath, result, project.Geometry.MeshNames);
+            RasTools.H5WriterTools.OverwriteMaxWSEForAll2DCells(OutputFilePath, result, project.Geometry.MeshNames);
         }
         if (project.Geometry.HasXSs)
         {
             float[] result = project.GetResultsForAEPXS(AEP);
-            RasTools.OverwriteMaxWSEforAllXs(OutputFilePath, result);
+            RasTools.H5WriterTools.OverwriteMaxWSEforAllXs(OutputFilePath, result);
         }
         if(project.Geometry.HasSAs)
         {
@@ -57,7 +57,7 @@ public class AEPResultsWriter
         if (File.Exists(OutputFilePath) && Path.GetExtension(OutputFilePath).Equals(".hdf"))
         {
             float[][] results = project.GetResultsForAEP2D(AEP);
-            RasTools.OverwriteSingleProfile(OutputFilePath, project.Geometry.MeshNames, results );
+            RasTools.H5WriterTools.OverwriteSingleProfile(OutputFilePath, project.Geometry.MeshNames, results );
             sucess = true;
         }
         return sucess;
