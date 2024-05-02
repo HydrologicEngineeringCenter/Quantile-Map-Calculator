@@ -3,7 +3,7 @@
 //Hard coded to local data. too big to upload to github. 
 string lifecycleDirectoryPath = @"D:\AEP Grid\All2DMuncie\Muncie_WAT\runs\Without_Project_Conditions\FRA_50yr\realization 1\lifecycle 1\";
 string rasFilePath = "RAS\\Muncie.p13.hdf";
-string outputFilePath = "D:\\AEP Grid\\muncieAll2D_50_rowOnly.hdf";
+string outputFilePath = "D:\\AEP Grid\\muncieAll2D_50_WriteMultipleAEPS.hdf";
 float[] theAEPs = [.99f, .5f, .2f, .1f, .02f];
 string[] eventdirs = Directory.GetDirectories(lifecycleDirectoryPath); //returns directories without trailing "\\"
 
@@ -25,5 +25,5 @@ for (int i = 0; i < eventdirs.Length; i++)
 }
 
 AEPResultsWriter writer = new(outputFilePath);
-bool success = writer.OverwriteTimeseriesInHDFResults(computer, .02f); // .5 = 2yr event, .02 = 50yr event, .04 = 25yr event
+bool success = writer.OverwriteTimeseriesInHDFResults(computer, theAEPs); // .5 = 2yr event, .02 = 50yr event, .04 = 25yr event
 Console.WriteLine(success);

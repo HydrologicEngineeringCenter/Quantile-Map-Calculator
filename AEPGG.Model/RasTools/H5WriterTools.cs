@@ -17,14 +17,7 @@ public class H5WriterTools
     public static void OverwriteMaxWSEforAllXs(string filePath, float[] data)
     {
         string hdfPathToData = ResultsDatasets.Unsteady.SummaryOutput.CrossSections.MaxWaterSurface.Name;
-        float[,] dataTable = new float[3, data.Length];
-        for (int i = 0; i < data.Length; i++)
-        {
-            dataTable[0, i] = data[i]; //Max WSE
-            dataTable[1, i] = 0; //Flow at Max (Just bullshit for now)
-            dataTable[2, i] = 0; //Time of Max (Just bullshit for now)
-        }
-        WriteDataToHDF(filePath, hdfPathToData, dataTable);
+        WriteDataToHDF(filePath, hdfPathToData, data,0);
     }
 
     /// <summary> Overwrites the water surface elevation in the results timeseries with a single profile for each of the specified meshes </summary>
@@ -35,13 +28,6 @@ public class H5WriterTools
         {
             OverwriteSingleProfile2D(filePath, meshNames[i], data[i], rowID);
         }
-    }
-    
-    //probably faster to pull this H5 writer up a level and not reopen it very time we read a row. 
-    private static void WriteDataToHDF(string filePath, string hdfPathToData, float[,] data)
-    {
-        using H5Writer hw = new(filePath);
-        hw.WriteDataset(hdfPathToData, data);
     }
 
     private static void WriteDataToHDF(string filePath, string hdfPathToData, float[] data, int rowID)
@@ -54,13 +40,7 @@ public class H5WriterTools
     private static void OverwriteMaxWSEForAll2DCells(string filePath, string meshName, float[] data)
     {
         string hdfPathToData = ResultsDatasets.Unsteady.SummaryOutput.FlowAreas.MaxWaterSurface.Name(meshName);
-        float[,] dataWithTimeRow = new float[2, data.Length];
-        for (int i = 0; i < data.Length; i++)
-        {
-            dataWithTimeRow[0, i] = data[i]; //Max WSE
-            dataWithTimeRow[1, i] = 0; //Time of Max (Just bullshit for now)
-        }
-        WriteDataToHDF(filePath, hdfPathToData, dataWithTimeRow);
+        WriteDataToHDF(filePath, hdfPathToData, data, 0); //Max WSE is always at row 0
     }
 
     /// <summary> Overwrites the water surface elevation in the results timeseries with a single profile for a single mesh </summary>

@@ -40,10 +40,12 @@
                 binExceedenceProb = 1f - ((float)numSamplesSoFar / NumSamples);
                 
             }
-            if(binIndex == 0) // if the answer is in the first bin, return the min. Assume at this resolution the cell is dry. 
-                return Min;
+            float ret;
+            if (binIndex == 0) // if the answer is in the first bin, return the min. Assume at this resolution the cell is dry. 
+                ret = Min;
             else
-                return Min + (binIndex * BinWidth) + (BinWidth/2); //if the answer is in any other bin, return the center value of that bin. 
+                ret = Min + (binIndex * BinWidth) + (BinWidth/2); //if the answer is in any other bin, return the center value of that bin.
+            return ret;
         }
     }
 }

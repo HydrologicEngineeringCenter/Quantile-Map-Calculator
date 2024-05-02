@@ -47,25 +47,28 @@ public class AEPResultsWriter
     /// <summary>
     /// overwrites the timeseries data in the HEC-RAS result file with the results from the project for the specified AEP. Project must have results. Output file must have a matching geometry to the project.
     /// </summary>
-    public bool OverwriteTimeseriesInHDFResults(AEPComputer project, float AEP)
+    public bool OverwriteTimeseriesInHDFResults(AEPComputer project, float[] AEPs)
     {
         if (!File.Exists(OutputFilePath) && !(Path.GetExtension(OutputFilePath) == ".hdf"))
         { 
             return false;
         }
-        if (project.Geometry.Has2Ds)
+        for(int i = 0; i < AEPs.Length; i++)
         {
-            float[][] result = project.GetResultsForAEP2D(AEP); //only using 1 AEP for now. 
-            RasTools.H5WriterTools.OverwriteSingleProfile2D(OutputFilePath, project.Geometry.MeshNames, result,0);
-        }
-        if (project.Geometry.HasXSs)
-        {
-            float[] result = project.GetResultsForAEPXS(AEP);
-            RasTools.H5WriterTools.OverwriteSingleProfileXS(OutputFilePath, result,0);
-        }
-        if (project.Geometry.HasSAs)
-        {
-            throw new NotImplementedException("Haven't bothered with SA's yet");
+            if (project.Geometry.Has2Ds)
+            {
+                float[][] result = project.GetResultsForAEP2D(AEPs[i]);
+                RasTools.H5WriterTools.OverwriteSingleProfile2D(OutputFilePath, project.Geometry.MeshNames, result, i);
+            }
+            if (project.Geometry.HasXSs)
+            {
+                float[] result = project.GetResultsForAEPXS(AEPs[i]);
+                RasTools.H5WriterTools.OverwriteSingleProfileXS(OutputFilePath, result, i);
+            }
+            if (project.Geometry.HasSAs)
+            {
+                throw new NotImplementedException("Haven't bothered with SA's yet");
+            }
         }
         return true;
     }
