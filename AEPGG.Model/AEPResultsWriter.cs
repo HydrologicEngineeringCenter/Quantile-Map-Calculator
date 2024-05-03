@@ -1,6 +1,4 @@
-﻿using System.Linq;
-
-namespace AEPGG.Model;
+﻿namespace AEPGG.Model;
 
 public class AEPResultsWriter
 {

@@ -1,51 +1,45 @@
 ﻿using RasMapperLib;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
-namespace AEPGG.Model.RasTools
+namespace AEPGG.Model.RasTools;
+
+public static class RASResultsTools
 {
-    public static class RASResultsTools
+    public static string[] GetMeshNames(RASGeometry geom)
     {
-        public static string[] GetMeshNames(RASGeometry geom)
+        int featureCount = geom.D2FlowArea.FeatureCount();
+        string[] names = new string[featureCount];
+        for (int i = 0; i < featureCount; i++)
         {
-            int featureCount = geom.D2FlowArea.FeatureCount();
-            string[] names = new string[featureCount];
-            for (int i = 0; i < featureCount; i++)
-            {
-                names[i] = geom.D2FlowArea.GetFeatureName(i);
-            }
-            //Order matters here. The writer is going to depend on these being in the same order 
-            return names;
+            names[i] = geom.D2FlowArea.GetFeatureName(i);
         }
-        public static bool ContainsXS(RASGeometry geom)
+        //Order matters here. The writer is going to depend on these being in the same order 
+        return names;
+    }
+    public static bool ContainsXS(RASGeometry geom)
+    {
+        bool hasXS = false;
+        if (geom.XS.FeatureCount() > 0)
         {
-            bool hasXS = false;
-            if (geom.XS.FeatureCount() > 0)
-            {
-                hasXS = true;
-            }
-            return hasXS;
+            hasXS = true;
         }
-        public static bool ContainsSA(RASGeometry geom)
+        return hasXS;
+    }
+    public static bool ContainsSA(RASGeometry geom)
+    {
+        bool hasSA = false;
+        if (geom.StorageArea.FeatureCount() > 0)
         {
-            bool hasSA = false;
-            if (geom.StorageArea.FeatureCount() > 0)
-            {
-                hasSA = true;
-            }
-            return hasSA;
+            hasSA = true;
         }
-        public static bool Contains2D(RASGeometry geom)
+        return hasSA;
+    }
+    public static bool Contains2D(RASGeometry geom)
+    {
+        bool has2D = false;
+        if (geom.D2FlowArea.FeatureCount() > 0)
         {
-            bool has2D = false;
-            if (geom.D2FlowArea.FeatureCount() > 0)
-            {
-                has2D = true;
-            }
-            return has2D;
+            has2D = true;
         }
+        return has2D;
     }
 }
