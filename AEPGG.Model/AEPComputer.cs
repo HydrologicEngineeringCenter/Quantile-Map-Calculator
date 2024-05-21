@@ -14,6 +14,7 @@ public class AEPComputer
     public Histogram[] HistogramsXS { get; private set; }
 
     /// <summary>
+    /// The geometry basically provides the information about the model necessary to know how many histogram arrays to set up, and where that data is saved in the results.
     /// contains the geometry of the model which does not change between results in a single compute.
     /// setter remains public for testing purposes.
     /// </summary>
@@ -89,7 +90,6 @@ public class AEPComputer
         }
     }
 
-
     /// <summary>
     /// Histograms initialize based on the minimum cell elevations in the first result, which are will be consistent across all results, the range of values expected for the WSE in a cell, and the bin width.
     /// </summary>
@@ -124,7 +124,6 @@ public class AEPComputer
             HistogramsXS[i] = new Histogram(binWidth, min, max);
         }
     }
-
 
     /// <param name="aep"> an annual Exceedence Probability </param>
     /// <returns> returns the WSE for each cell in each 2D area for the specified AEP. [2D Area Index][Cell Index]</returns>

@@ -5,12 +5,13 @@ string lifecycleDirectoryPath = @"D:\AEP Grid\All2DMuncie\Muncie_WAT\runs\Withou
 string rasFilePath = "RAS\\Muncie.p13.hdf";
 string outputFilePath = "D:\\AEP Grid\\muncieAll2D_50_WriteMultipleAEPS.hdf";
 float[] theAEPs = [.99f, .5f, .2f, .1f, .02f];
-string[] eventdirs = Directory.GetDirectories(lifecycleDirectoryPath); //returns directories without trailing "\\"
 
 //initialize the computer
+string[] eventdirs = Directory.GetDirectories(lifecycleDirectoryPath); //returns directories without trailing "\\"
 string seedfile = eventdirs[0] + "\\" + rasFilePath;
 RasResultWrapper seedResult = new(seedfile);
 AEPComputer computer = new(seedResult, 0.1f,20f);
+
 //copy the seed file to the output file
 File.Copy(seedfile, outputFilePath, true); 
 

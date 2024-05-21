@@ -2,7 +2,9 @@
 using RasMapperLib;
 
 namespace AEPGG.Model;
-
+/// <summary>
+/// This class stores the important bits of a RAS Geometry file, so we only have to dig into it once. 
+/// </summary>
 public class RasGeometryWrapper: IGeometry
 {
     public bool HasXSs {get;}
