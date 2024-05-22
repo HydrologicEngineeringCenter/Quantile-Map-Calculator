@@ -1,4 +1,5 @@
 ﻿using AEPGG.Model.Interfaces;
+using RasMapperLib;
 
 namespace AEPGG.Model;
 
@@ -43,7 +44,7 @@ public class AEPComputer
     {
         if (Geometry.Has2Ds)
         {
-            AddResuls2D(result);
+            AddResults2D(result);
         }
         if (Geometry.HasXSs)
         {
@@ -62,7 +63,7 @@ public class AEPComputer
             HistogramsXS[i].AddValue(data[i]);
         }
     }
-    public void AddResuls2D(IHydraulicResults result)
+    public void AddResults2D(IHydraulicResults result)
     {
         float[][] data = result.GetMax2DWSE(Geometry.MeshNames);
         for (int i = 0; i < data.Length; i++)//for each 2D area
