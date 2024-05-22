@@ -56,7 +56,15 @@ public class Config
 
         //initialize the computer
         RasResultWrapper seedResult = new(seedFile);
-        AEPComputer computer = new(seedResult, BinWidth, Range);
+        BaseComputer computer;
+        if(IsRealizationCompute)
+        {
+            computer = new AEPComputer(seedResult, BinWidth, Range);
+        }
+        else
+        {
+            computer = new ConfidenceComputer(seedResult, BinWidth, Range);
+        }
         CompileResults(filteredFiles, computer);
         Write(computer);
     }
@@ -72,14 +80,14 @@ public class Config
         return filteredFiles;
     }
 
-    private void Write(AEPComputer computer)
+    private void Write(BaseComputer computer)
     {
         AEPResultsWriter writer = new(OutputPath);
         bool success = writer.OverwriteTimeseriesInHDFResults(computer, DesiredAEPs); // .5 = 2yr event, .02 = 50yr event, .04 = 25yr event
         Console.WriteLine(success);
     }
 
-    private void CompileResults(string[] resultsFiles, AEPComputer computer)
+    private void CompileResults(string[] resultsFiles, BaseComputer computer)
     {
         foreach(string resultsfile in resultsFiles)
         {

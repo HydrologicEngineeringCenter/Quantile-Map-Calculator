@@ -2,7 +2,7 @@
 
 namespace AEPGG.Model.Computers;
 
-internal class ConfidenceComputer : BaseComputer
+internal sealed class ConfidenceComputer : BaseComputer
 {
     public ConfidenceComputer(IHydraulicResults result, float binWidth, float range, IGeometry mockGeometry = null) : base(result, binWidth, range, mockGeometry)
     {

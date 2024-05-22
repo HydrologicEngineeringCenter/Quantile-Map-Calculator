@@ -3,7 +3,8 @@ using RasMapperLib;
 
 namespace AEPGG.Model.Computers;
 
-internal class AEPComputer:BaseComputer
+//sealed. I don't intend to inherit deeper than 1.
+ internal sealed class AEPComputer:BaseComputer
 {
     /// <summary>
     /// <cref name="AEPComputer"/> sets up arrays of histograms to store results.
