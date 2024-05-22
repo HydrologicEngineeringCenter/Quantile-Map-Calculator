@@ -2,7 +2,7 @@
 
 namespace AEPGG.Model.Computers;
 
-internal class BaseComputer
+internal abstract class BaseComputer
 {
 
     /// <summary>
@@ -55,25 +55,8 @@ internal class BaseComputer
             throw new NotImplementedException("Haven't bothered with SA's yet");
         }
     }
-    public void AddResultsXS(IHydraulicResults result)
-    {
-        float[] data = result.GetMaxXSWSE();
-        for (int i = 0; i < data.Length; i++) //for each XS
-        {
-            HistogramsXS[i].AddValue(data[i]);
-        }
-    }
-    public void AddResults2D(IHydraulicResults result)
-    {
-        float[][] data = result.GetMax2DWSE(Geometry.MeshNames);
-        for (int i = 0; i < data.Length; i++)//for each 2D area
-        {
-            for (int j = 0; j < data[i].Length; j++) //for each cell in the 2D area
-            {
-                Histograms2DAreas[i][j].AddValue(data[i][j]);
-            }
-        }
-    }
+    public abstract void AddResultsXS(IHydraulicResults result);
+    public abstract void AddResults2D(IHydraulicResults result);
 
     private void InitializeHistograms(IHydraulicResults result, float range, float binWidth)
     {
