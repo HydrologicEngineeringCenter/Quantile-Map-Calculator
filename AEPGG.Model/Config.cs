@@ -37,7 +37,9 @@ public class Config
     {
         //Internal because I want people outside deserielizing this object from JSON.
     }
-
+    /// <summary>
+    /// Copies the first results file to the output file, Creates histograms of all results files which exist recursively in the ResultsDirectory, and writes the results to the output file at the locations requested.
+    /// </summary>
     public void Compute()
     {
         string[] filteredFiles = GetAllResultsFiles();
