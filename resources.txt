@@ -1,0 +1,1 @@
+https://jsonapi.org/recommendations/
