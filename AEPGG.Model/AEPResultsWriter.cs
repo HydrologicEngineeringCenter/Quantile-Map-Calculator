@@ -1,4 +1,6 @@
-﻿namespace AEPGG.Model;
+﻿using AEPGG.Model.Computers;
+
+namespace AEPGG.Model;
 
 public class AEPResultsWriter
 {
