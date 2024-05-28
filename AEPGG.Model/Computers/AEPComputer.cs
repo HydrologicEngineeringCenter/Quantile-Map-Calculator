@@ -4,7 +4,7 @@ namespace AEPGG.Model.Computers;
 
 public class AEPComputer: BaseComputer
 {
-    public AEPComputer(IHydraulicResults result, float binWidth, float range, bool isRealizationCompute, IGeometry mockGeometry = null):base(result, binWidth, range, mockGeometry){}
+    public AEPComputer(IHydraulicResults result, float binWidth, float range, IGeometry mockGeometry = null):base(result, binWidth, range, mockGeometry){}
 
     public override void AddResultsXS(IHydraulicResults result)
     {

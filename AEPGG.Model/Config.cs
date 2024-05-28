@@ -1,4 +1,5 @@
-﻿using System.Text.Json.Serialization;
+﻿using System.Text;
+using System.Text.Json.Serialization;
 using System.Text.RegularExpressions;
 using AEPGG.Model.Computers;
 
@@ -22,7 +23,7 @@ public class Config
     [JsonPropertyName("outputPath")]
     public string OutputPath { get; set; }
     /// <summary>
-    /// The AEPs which will be pulled from the results histograms. 
+    /// The AEPs which will be pulled from the results histograms. If doing a confidence compute, these should be the AEPs recorded in the input results files. 
     /// </summary>
     [JsonPropertyName("desiredAeps")]
     public float[] DesiredAEPs { get; set; }
@@ -38,6 +39,12 @@ public class Config
     public float Range { get; set; }
 
     /// <summary>
+    /// The desired quatiles for the confidence compute. Not used for a realization compute. 
+    /// </summary>
+    [JsonPropertyName("desiredQuantiles")]
+    public float[] DesiredQuantiles { get; set; }
+
+    /// <summary>
     /// Holds all necessary information for a compute. 
     /// </summary>
     public Config()
@@ -49,18 +56,44 @@ public class Config
     public void Compute()
     {
         string[] filteredFiles = GetAllResultsFiles();
-
+        RasResultWrapper seedResult = new(filteredFiles[0]);
+        if (IsRealizationCompute)
+        {
+            ComputeRealizationResult(filteredFiles, seedResult);
+        }
+        else
+        {
+            ComputeConfidenceResult(filteredFiles, seedResult);
+        }
+    }
+    private void ComputeRealizationResult(string[] filteredFiles, RasResultWrapper seedResult)
+    {
         //copy the seed file to the output file
         string seedFile = filteredFiles[0];
         File.Copy(seedFile, OutputPath, true);
 
-        //initialize the computer
-        RasResultWrapper seedResult = new(seedFile);
         AEPComputer computer = new(seedResult, BinWidth, Range);
         CompileResults(filteredFiles, computer);
-        Write(computer);
+        WriteRealizationResult(computer);
+    }
+    private void ComputeConfidenceResult(string[] filteredFiles, RasResultWrapper seedResult)
+    {
+        for (int i=0; i<DesiredAEPs.Length; i++)
+        {
+            ConfidenceComputer computer = new(seedResult, BinWidth, Range, profileOfInterest:i);
+            string outputFile = GetConfidenceFileName(DesiredAEPs[i]);
+            File.Copy(filteredFiles[0], outputFile, true);
+            CompileResults(filteredFiles, computer);
+            WriteConfidenceResult(computer,outputFile);
+        }
     }
 
+    private string GetConfidenceFileName(float AEP)
+    {
+        string[] splitString = OutputPath.Split("\\");
+        splitString[^1] = "ConfidenceOfAEP" + AEP + ".hdf";
+        return String.Join("\\", splitString);
+    }
     private string[] GetAllResultsFiles()
     {
         //get all the results files. Need to use the Regex to avoid a .tmp.hdf sneaking in.
@@ -72,14 +105,17 @@ public class Config
         return filteredFiles;
     }
 
-    private void Write(AEPComputer computer)
+    private void WriteRealizationResult(BaseComputer computer)
     {
         AEPResultsWriter writer = new(OutputPath);
         bool success = writer.OverwriteTimeseriesInHDFResults(computer, DesiredAEPs); // .5 = 2yr event, .02 = 50yr event, .04 = 25yr event
-        Console.WriteLine(success);
     }
-
-    private void CompileResults(string[] resultsFiles, AEPComputer computer)
+    private void WriteConfidenceResult(ConfidenceComputer computer,string outputPath)
+    {
+        AEPResultsWriter writer = new(outputPath);
+        bool success = writer.OverwriteTimeseriesInHDFResults(computer, DesiredQuantiles);
+    }
+    private void CompileResults(string[] resultsFiles, BaseComputer computer)
     {
         foreach(string resultsfile in resultsFiles)
         {
