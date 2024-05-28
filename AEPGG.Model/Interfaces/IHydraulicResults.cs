@@ -10,6 +10,8 @@ public interface IHydraulicResults
     public float[][] GetMin2DWSE(string[] meshNames);
     public float[] GetMaxXSWSE();
     public float[] GetMinXSWSE();
+    public float[] GetXSWSE(int profileIndex);
+    public float[][] Get2DWSE(int profileIndex, string[] meshNames );
 
     /// <summary>
     /// File Path to an HEC-RAS 6.x unsteady hdf result. 

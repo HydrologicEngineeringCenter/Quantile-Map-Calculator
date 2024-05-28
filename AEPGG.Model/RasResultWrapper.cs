@@ -28,5 +28,18 @@ public class RasResultWrapper : IHydraulicResults
         return RasTools.H5ReaderTools.GetMinWSEForAllXS(FilePath);
     }
 
+    public float[] GetXSWSE(int profileIndex)
+    {
+        return RasTools.H5ReaderTools.GetWSEForXSProfile(FilePath,profileIndex);
+    }
 
+    public float[][] Get2DWSE(int profileIndex, string[] meshNames)
+    {
+        float[][] results = new float[meshNames.Length][];
+        for( int i = 0; i < meshNames.Length; i++)
+        {
+            results[i] = RasTools.H5ReaderTools.GetWSEFor2DProfile(FilePath, meshNames[i], profileIndex);
+        }
+        return results;
+    }
 }

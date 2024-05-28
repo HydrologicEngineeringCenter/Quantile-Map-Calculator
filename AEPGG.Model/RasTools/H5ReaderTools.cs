@@ -60,12 +60,12 @@ public static class H5ReaderTools
         return dataOut;
     }
 
-    private static float[] GetWSEFor2DProfile(string filePath, string meshName, int rowID)
+    public static float[] GetWSEFor2DProfile(string filePath, string meshName, int rowID)
     {
         string hdfPathToData = ResultsDatasets.Unsteady.TimeSeriesOutput.FlowAreas.WaterSurface(meshName);
         return GetRowFromHDF(filePath, hdfPathToData, rowID);
     }
-    private static float[] GetWSEForXSProfile(string filePath, int rowID)
+    public static float[] GetWSEForXSProfile(string filePath, int rowID)
     {
         string hdfPathToData = ResultsDatasets.Unsteady.TimeSeriesOutput.CrossSections.WaterSurface;
         return GetRowFromHDF(filePath, hdfPathToData, rowID);
