@@ -1,5 +1,4 @@
-﻿using System.Text;
-using System.Text.Json.Serialization;
+﻿using System.Text.Json.Serialization;
 using System.Text.RegularExpressions;
 using AEPGG.Model.Computers;
 
@@ -39,7 +38,7 @@ public class Config
     public float Range { get; set; }
 
     /// <summary>
-    /// The desired quatiles for the confidence compute. Not used for a realization compute. 
+    /// The desired quatiles for the confidence compute. Not used for a realization compute. OPTIONAL PARAMETER
     /// </summary>
     [JsonPropertyName("desiredQuantiles")]
     public float[] DesiredQuantiles { get; set; }
@@ -108,14 +107,16 @@ public class Config
     private void WriteRealizationResult(BaseComputer computer)
     {
         AEPResultsWriter writer = new(OutputPath);
-        bool success = writer.OverwriteTimeseriesInHDFResults(computer, DesiredAEPs); // .5 = 2yr event, .02 = 50yr event, .04 = 25yr event
+        bool _ = writer.OverwriteTimeseriesInHDFResults(computer, DesiredAEPs); // .5 = 2yr event, .02 = 50yr event, .04 = 25yr event
+        //TODO: Add a check for success.
     }
     private void WriteConfidenceResult(ConfidenceComputer computer,string outputPath)
     {
         AEPResultsWriter writer = new(outputPath);
-        bool success = writer.OverwriteTimeseriesInHDFResults(computer, DesiredQuantiles);
+        bool _ = writer.OverwriteTimeseriesInHDFResults(computer, DesiredQuantiles);
+        //TODO: Add a check for success.
     }
-    private void CompileResults(string[] resultsFiles, BaseComputer computer)
+    private static void CompileResults(string[] resultsFiles, BaseComputer computer)
     {
         foreach(string resultsfile in resultsFiles)
         {
