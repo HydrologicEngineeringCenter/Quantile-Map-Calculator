@@ -39,5 +39,15 @@ namespace AEPGG.Model
         {
             throw new NotImplementedException();
         }
+
+        public float[] GetXSWSE(int profileIndex)
+        {
+            throw new NotImplementedException();
+        }
+
+        public float[][] Get2DWSE(int profileIndex, string[] meshNames)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

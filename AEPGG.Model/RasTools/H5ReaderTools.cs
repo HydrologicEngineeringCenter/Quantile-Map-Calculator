@@ -20,7 +20,21 @@ public static class H5ReaderTools
         }
         return WSEs;
     }
+    /// <param name="filePath"> must have .hdf extension</param>
+    public static float[] GetMaxWSEForAllXS(string filePath)
+    {
+        string hdfPathToData = ResultsDatasets.Unsteady.SummaryOutput.CrossSections.MaxWaterSurface.Name;
+        float[] data = GetRowFromHDF(filePath, hdfPathToData, 0);
+        return data;
+    }
 
+    /// <param name="filePath"> must have .hdf extension</param>
+    public static float[] GetMinWSEForAllXS(string filePath)
+    {
+        string hdfPathToData = ResultsDatasets.Unsteady.SummaryOutput.CrossSections.MinWaterSurface.Name;
+        float[] data = GetRowFromHDF(filePath, hdfPathToData, 0);
+        return data;
+    }
 
     private static float[] GetMaxOrMinWSEForAll2DCells(string filePath, string meshName, bool getMax)
     {
@@ -46,19 +60,14 @@ public static class H5ReaderTools
         return dataOut;
     }
 
-    /// <param name="filePath"> must have .hdf extension</param>
-    public static float[] GetMaxWSEForAllXS(string filePath)
+    public static float[] GetWSEFor2DProfile(string filePath, string meshName, int rowID)
     {
-        string hdfPathToData = ResultsDatasets.Unsteady.SummaryOutput.CrossSections.MaxWaterSurface.Name;
-        float[] data = GetRowFromHDF(filePath, hdfPathToData, 0);
-        return data;
+        string hdfPathToData = ResultsDatasets.Unsteady.TimeSeriesOutput.FlowAreas.WaterSurface(meshName);
+        return GetRowFromHDF(filePath, hdfPathToData, rowID);
     }
-
-    /// <param name="filePath"> must have .hdf extension</param>
-    public static float[] GetMinWSEForAllXS(string filePath)
+    public static float[] GetWSEForXSProfile(string filePath, int rowID)
     {
-        string hdfPathToData = ResultsDatasets.Unsteady.SummaryOutput.CrossSections.MinWaterSurface.Name;
-        float[] data = GetRowFromHDF(filePath, hdfPathToData, 0);
-        return data;
+        string hdfPathToData = ResultsDatasets.Unsteady.TimeSeriesOutput.CrossSections.WaterSurface;
+        return GetRowFromHDF(filePath, hdfPathToData, rowID);
     }
 }

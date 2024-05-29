@@ -1,10 +1,10 @@
 ﻿using AEPGG.Model.Interfaces;
-using RasMapperLib;
 
-namespace AEPGG.Model;
+namespace AEPGG.Model.Computers;
 
-public class AEPComputer
+public abstract class BaseComputer
 {
+
     /// <summary>
     /// Contain results for [2D area index][each cell index].
     /// </summary>
@@ -27,7 +27,7 @@ public class AEPComputer
     /// <param name="result"> this is a seed result, perhaps the first result from the compute, that will be used to intialize the histograms</param>
     /// <param name="binWidth"> this is the bin width of the histograms. this roughly equates to the resolution we'll be storing our results.</param>
     /// <param name="range"> this is the maximum range of WSEs we expect our histograms to capture. This is approximately the maximum depth we expect to see. It determines number of bins </param>
-    public AEPComputer(IHydraulicResults result, float binWidth, float range, IGeometry mockGeometry = null)
+    public BaseComputer(IHydraulicResults result, float binWidth, float range, IGeometry mockGeometry = null)
     {
         if (mockGeometry != null)
         {
@@ -55,25 +55,8 @@ public class AEPComputer
             throw new NotImplementedException("Haven't bothered with SA's yet");
         }
     }
-    public void AddResultsXS(IHydraulicResults result)
-    {
-        float[] data = result.GetMaxXSWSE();
-        for (int i = 0; i < data.Length; i++) //for each XS
-        {
-            HistogramsXS[i].AddValue(data[i]);
-        }
-    }
-    public void AddResults2D(IHydraulicResults result)
-    {
-        float[][] data = result.GetMax2DWSE(Geometry.MeshNames);
-        for (int i = 0; i < data.Length; i++)//for each 2D area
-        {
-            for (int j = 0; j < data[i].Length; j++) //for each cell in the 2D area
-            {
-                Histograms2DAreas[i][j].AddValue(data[i][j]);
-            }
-        }
-    }
+    public abstract void AddResultsXS(IHydraulicResults result);
+    public abstract void AddResults2D(IHydraulicResults result);
 
     private void InitializeHistograms(IHydraulicResults result, float range, float binWidth)
     {
