@@ -5,6 +5,15 @@ namespace AEPGG.Model.Computers;
 public class ConfidenceComputer : BaseComputer
 {
     public int ProfileOfInterest { set; get; }
+
+    /// <summary>
+    /// This computer performs the second loop of the AEP compute, creating a series of grids which show the uncertainty of a given AEP at desired quantiles. 
+    /// </summary>
+    /// <param name="result">A seed result with the proper geometry for the compute.</param>
+    /// <param name="binWidth">~resolution of the results</param>
+    /// <param name="range"> the range of expected WSEs from dry cell to max WSE</param>
+    /// <param name="profileOfInterest"> the AEP for which to compute confidence</param>
+    /// <param name="mockGeometry"> ONLY USED FOR UNIT TESTING</param>
     public ConfidenceComputer(IHydraulicResults result, float binWidth, float range, int profileOfInterest, IGeometry mockGeometry = null) : base(result, binWidth, range, mockGeometry) 
     {
         ProfileOfInterest = profileOfInterest;
