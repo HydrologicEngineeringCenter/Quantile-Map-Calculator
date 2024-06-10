@@ -12,12 +12,13 @@ public class ConfidenceComputer : BaseComputer
     /// <param name="result">A seed result with the proper geometry for the compute.</param>
     /// <param name="binWidth">~resolution of the results</param>
     /// <param name="range"> the range of expected WSEs from dry cell to max WSE</param>
-    /// <param name="profileOfInterest"> the AEP for which to compute confidence</param>
+    /// <param name="profileOfInterest"> the index of the AEP for which to compute confidence. Should relate to the index from the list of AEPs the AEPComputer calculated in the first loop.</param>
     /// <param name="mockGeometry"> ONLY USED FOR UNIT TESTING</param>
     public ConfidenceComputer(IHydraulicResults result, float binWidth, float range, int profileOfInterest, IGeometry mockGeometry = null) : base(result, binWidth, range, mockGeometry) 
     {
         ProfileOfInterest = profileOfInterest;
     }
+
 
     public override void AddResults2D(IHydraulicResults result)
     {

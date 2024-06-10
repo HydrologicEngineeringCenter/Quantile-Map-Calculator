@@ -32,7 +32,7 @@ public class RasResultWrapper : IHydraulicResults
     {
         return RasTools.H5ReaderTools.GetWSEForXSProfile(FilePath,profileIndex);
     }
-
+    /// <returns>A jagged array which contains the 2D WSE cell elevations [MeshIndex][CellIndex]</returns>
     public float[][] Get2DWSE(int profileIndex, string[] meshNames)
     {
         float[][] results = new float[meshNames.Length][];
