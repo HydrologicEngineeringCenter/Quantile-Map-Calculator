@@ -1,4 +1,4 @@
-﻿namespace AEPGG.Model;
+﻿namespace QPC.Model;
 
 public class Histogram
 {
@@ -21,7 +21,7 @@ public class Histogram
     {
         int binIndex = (int)Math.Floor((value - Min) / BinWidth);
         BinCounts[binIndex]++;
-        NumSamples++; 
+        NumSamples++;
     }
     /// <summary>
     /// returns the value of the histogram for the exceedence probability specified. Ex. .01 would return the 100 Year return interval WSE
@@ -37,14 +37,14 @@ public class Histogram
         {
             binIndex++; //increment first
             numSamplesSoFar += BinCounts[binIndex];
-            binExceedenceProb = 1f - ((float)numSamplesSoFar / NumSamples);
-            
+            binExceedenceProb = 1f - (float)numSamplesSoFar / NumSamples;
+
         }
         float ret;
         if (binIndex == 0) // if the answer is in the first bin, return the min. Assume at this resolution the cell is dry. 
             ret = Min;
         else
-            ret = Min + (binIndex * BinWidth) + (BinWidth/2); //if the answer is in any other bin, return the center value of that bin.
+            ret = Min + binIndex * BinWidth + BinWidth / 2; //if the answer is in any other bin, return the center value of that bin.
         return ret;
     }
 }

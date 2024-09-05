@@ -1,6 +1,6 @@
-﻿using AEPGG.Model.Interfaces;
+﻿using QPC.Model.Interfaces;
 
-namespace AEPGG.Model
+namespace QPC.Model
 {
     public class MockHydraulicResult:IHydraulicResults
     {

@@ -1,9 +1,9 @@
-using AEPGG.Model.RasTools;
 using H5Assist;
+using QPC.Model.RasTools;
 using Ras.Layers;
 using RasMapperLib;
 
-namespace AEPGG.ModelTest
+namespace QPC.ModelTest
 {
     [Trait("RunsOn", "Local")]
     public class RasToolsShould
@@ -40,9 +40,9 @@ namespace AEPGG.ModelTest
         [Fact]
         public void OverwriteMaxWSE()
         {
-            string newOutputFilePath = @"..\..\..\Resources\MuncieTEMP.p04.hdf" ;
+            string newOutputFilePath = @"..\..\..\Resources\MuncieTEMP.p04.hdf";
             File.Copy(filePath, newOutputFilePath, true);
-            float[][] currentWSEs = H5ReaderTools.GetMaxOrMinWSEForAll2DCells(newOutputFilePath,true, meshNames);
+            float[][] currentWSEs = H5ReaderTools.GetMaxOrMinWSEForAll2DCells(newOutputFilePath, true, meshNames);
             float[][] newWSEs = (float[][])currentWSEs.Clone();
             for (int i = 0; i < newWSEs.Length; i++)
             {
@@ -84,7 +84,7 @@ namespace AEPGG.ModelTest
             // Arrange
             string newOutputFilePath = @"..\..\..\Resources\MuncieTEMP.p04.hdf";
             File.Copy(filePath, newOutputFilePath, true);
-            float[][] currentWSEs = H5ReaderTools.GetMaxOrMinWSEForAll2DCells(newOutputFilePath,true,meshNames);
+            float[][] currentWSEs = H5ReaderTools.GetMaxOrMinWSEForAll2DCells(newOutputFilePath, true, meshNames);
             float[][] newWSEs = (float[][])currentWSEs.Clone();
             for (int i = 0; i < newWSEs[0].Length; i++)
             {
@@ -92,13 +92,13 @@ namespace AEPGG.ModelTest
             }
 
             // Act
-            H5WriterTools.OverwriteSingleProfile2D(newOutputFilePath,meshNames, newWSEs,0);
+            H5WriterTools.OverwriteSingleProfile2D(newOutputFilePath, meshNames, newWSEs, 0);
             using H5Reader h5Reader = new(newOutputFilePath);
             float[,] result = null;
-                h5Reader.ReadRow(ResultsDatasets.Unsteady.TimeSeriesOutput.FlowAreas.WaterSurface(meshNames[0]), 0,ref result);
+            h5Reader.ReadRow(ResultsDatasets.Unsteady.TimeSeriesOutput.FlowAreas.WaterSurface(meshNames[0]), 0, ref result);
 
             // Assert
-            Assert.Equal(9.0f, result[0,0]);
+            Assert.Equal(9.0f, result[0, 0]);
         }
     }
 }

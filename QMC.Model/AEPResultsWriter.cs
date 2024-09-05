@@ -1,6 +1,7 @@
-﻿using AEPGG.Model.Computers;
+﻿using QPC.Model.Computers;
+using QPC.Model.RasTools;
 
-namespace AEPGG.Model;
+namespace QPC.Model;
 
 internal class AEPResultsWriter
 {
@@ -30,14 +31,14 @@ internal class AEPResultsWriter
         if (project.Geometry.Has2Ds)
         {
             float[][] result = project.GetResultsForAEP2D(AEP); //only using 1 AEP.
-            RasTools.H5WriterTools.OverwriteMaxWSEForAll2DCells(OutputFilePath, result, project.Geometry.MeshNames);
+            H5WriterTools.OverwriteMaxWSEForAll2DCells(OutputFilePath, result, project.Geometry.MeshNames);
         }
         if (project.Geometry.HasXSs)
         {
             float[] result = project.GetResultsForAEPXS(AEP);
-            RasTools.H5WriterTools.OverwriteMaxWSEforAllXs(OutputFilePath, result);
+            H5WriterTools.OverwriteMaxWSEforAllXs(OutputFilePath, result);
         }
-        if(project.Geometry.HasSAs)
+        if (project.Geometry.HasSAs)
         {
             throw new NotImplementedException("Haven't bothered with SA's yet");
         }
@@ -50,20 +51,20 @@ internal class AEPResultsWriter
     public bool OverwriteTimeseriesInHDFResults(BaseComputer project, float[] AEPs)
     {
         if (!File.Exists(OutputFilePath) && !(Path.GetExtension(OutputFilePath) == ".hdf"))
-        { 
+        {
             return false;
         }
-        for(int i = 0; i < AEPs.Length; i++)
+        for (int i = 0; i < AEPs.Length; i++)
         {
             if (project.Geometry.Has2Ds)
             {
                 float[][] result = project.GetResultsForAEP2D(AEPs[i]);
-                RasTools.H5WriterTools.OverwriteSingleProfile2D(OutputFilePath, project.Geometry.MeshNames, result, i);
+                H5WriterTools.OverwriteSingleProfile2D(OutputFilePath, project.Geometry.MeshNames, result, i);
             }
             if (project.Geometry.HasXSs)
             {
                 float[] result = project.GetResultsForAEPXS(AEPs[i]);
-                RasTools.H5WriterTools.OverwriteSingleProfileXS(OutputFilePath, result, i);
+                H5WriterTools.OverwriteSingleProfileXS(OutputFilePath, result, i);
             }
             if (project.Geometry.HasSAs)
             {

@@ -1,0 +1,37 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.7.34009.444
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{F8FCD45F-911B-4661-A8CC-0ECE1723CD8C}"
+	ProjectSection(SolutionItems) = preProject
+		.gitignore = .gitignore
+		.github\workflows\CI.yml = .github\workflows\CI.yml
+	EndProjectSection
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "QMC.Model", "QMC.Model\QMC.Model.csproj", "{84E96082-50E3-4CFA-BD20-41A8E254C4C7}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "QMC.ModelTest", "QMC.ModelTest\QMC.ModelTest.csproj", "{B442F08A-29B3-44D2-AF8F-AB07E527E347}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{84E96082-50E3-4CFA-BD20-41A8E254C4C7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{84E96082-50E3-4CFA-BD20-41A8E254C4C7}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{84E96082-50E3-4CFA-BD20-41A8E254C4C7}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{84E96082-50E3-4CFA-BD20-41A8E254C4C7}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B442F08A-29B3-44D2-AF8F-AB07E527E347}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B442F08A-29B3-44D2-AF8F-AB07E527E347}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B442F08A-29B3-44D2-AF8F-AB07E527E347}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B442F08A-29B3-44D2-AF8F-AB07E527E347}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {DF51C008-4EB5-45EA-9B96-AD780543E8B7}
+	EndGlobalSection
+EndGlobal

@@ -1,6 +1,6 @@
-﻿using AEPGG.Model.Interfaces;
+﻿using QPC.Model.Interfaces;
 
-namespace AEPGG.Model.Computers;
+namespace QPC.Model.Computers;
 
 public class ConfidenceComputer : BaseComputer
 {
@@ -14,7 +14,7 @@ public class ConfidenceComputer : BaseComputer
     /// <param name="range"> the range of expected WSEs from dry cell to max WSE</param>
     /// <param name="profileOfInterest"> the index of the AEP for which to compute confidence. Should relate to the index from the list of AEPs the AEPComputer calculated in the first loop.</param>
     /// <param name="mockGeometry"> ONLY USED FOR UNIT TESTING</param>
-    public ConfidenceComputer(IHydraulicResults result, float binWidth, float range, int profileOfInterest, IGeometry mockGeometry = null) : base(result, binWidth, range, mockGeometry) 
+    public ConfidenceComputer(IHydraulicResults result, float binWidth, float range, int profileOfInterest, IGeometry mockGeometry = null) : base(result, binWidth, range, mockGeometry)
     {
         ProfileOfInterest = profileOfInterest;
     }

@@ -1,9 +1,9 @@
-﻿using AEPGG.Model;
-using AEPGG.Model.Computers;
-using AEPGG.Model.Interfaces;
-using AEPGG.ModelTest.Mock_Data;
+﻿using QPC.Model;
+using QPC.Model.Computers;
+using QPC.Model.Interfaces;
+using QPC.ModelTest.Mock_Data;
 
-namespace AEPGG.ModelTest
+namespace QPC.ModelTest
 {
     [Trait("RunsOn", "Remote")]
     public class AEPComputerShould
@@ -28,7 +28,7 @@ namespace AEPGG.ModelTest
             int numResults = 5000;
             IHydraulicResults[] mockResults = GetMockResults(numResults);
             AEPComputer project = new(mockResults[0], 0.5f, 100, mockRasGeometryWrapper);
-            foreach(var mockResult in mockResults)
+            foreach (var mockResult in mockResults)
             {
                 project.AddResults(mockResult);
             }

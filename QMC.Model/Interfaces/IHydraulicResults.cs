@@ -1,4 +1,4 @@
-﻿namespace AEPGG.Model.Interfaces;
+﻿namespace QPC.Model.Interfaces;
 
 /// <summary>
 /// This interface exists solely to mock in data for unit testing. 

@@ -1,8 +1,8 @@
-﻿using AEPGG.Model.Interfaces;
+﻿using QPC.Model.Interfaces;
 
-namespace AEPGG.Model.Computers;
+namespace QPC.Model.Computers;
 
-public class AEPComputer: BaseComputer
+public class AEPComputer : BaseComputer
 {
     /// <summary>
     /// <cref name="AEPComputer"/> sets up arrays of histograms to store results.
@@ -10,7 +10,7 @@ public class AEPComputer: BaseComputer
     /// <param name="result"> this is a seed result, perhaps the first result from the compute, that will be used to intialize the histograms</param>
     /// <param name="binWidth"> this is the bin width of the histograms. this roughly equates to the resolution we'll be storing our results.</param>
     /// <param name="range"> this is the maximum range of WSEs we expect our histograms to capture. This is approximately the maximum depth we expect to see. It determines number of bins </param>
-    public AEPComputer(IHydraulicResults result, float binWidth, float range, IGeometry mockGeometry = null):base(result, binWidth, range, mockGeometry){}
+    public AEPComputer(IHydraulicResults result, float binWidth, float range, IGeometry mockGeometry = null) : base(result, binWidth, range, mockGeometry) { }
 
     public override void AddResultsXS(IHydraulicResults result)
     {
