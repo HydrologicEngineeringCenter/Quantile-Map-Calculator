@@ -1,5 +1,5 @@
-# AEP-Grid-Generator
-An application that creates AEP Grids from some number of HEC-RAS events.
+# Quantile-Map-Calculator
+An application that creates Quantile Maps from some number of HEC-RAS events.
 
 # Build Instruction
 This application is most easily build in Visual Studio. You will need a DotNet 7.0 or later SDK available here: https://dotnet.microsoft.com/en-us/download. 
