@@ -1,6 +1,8 @@
-﻿namespace AEPGG.ModelTest.Mock_Data;
+﻿using QPC.Model.Interfaces;
 
-internal class MockRasGeometryWrapper : Model.Interfaces.IGeometry
+namespace QPC.ModelTest.Mock_Data;
+
+internal class MockRasGeometryWrapper : IGeometry
 {
     public bool HasXSs { get; } 
     public bool HasSAs { get; }

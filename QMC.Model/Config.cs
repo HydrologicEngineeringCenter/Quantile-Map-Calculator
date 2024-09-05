@@ -1,8 +1,8 @@
 ﻿using System.Text.Json.Serialization;
 using System.Text.RegularExpressions;
-using AEPGG.Model.Computers;
+using QPC.Model.Computers;
 
-namespace AEPGG.Model;
+namespace QPC.Model;
 
 public class Config
 {
@@ -77,13 +77,13 @@ public class Config
     }
     private void ComputeConfidenceResult(string[] filteredFiles, RasResultWrapper seedResult)
     {
-        for (int i=0; i<DesiredAEPs.Length; i++)
+        for (int i = 0; i < DesiredAEPs.Length; i++)
         {
-            ConfidenceComputer computer = new(seedResult, BinWidth, Range, profileOfInterest:i);
+            ConfidenceComputer computer = new(seedResult, BinWidth, Range, profileOfInterest: i);
             string outputFile = GetConfidenceFileName(DesiredAEPs[i]);
             File.Copy(filteredFiles[0], outputFile, true);
             CompileResults(filteredFiles, computer);
-            WriteConfidenceResult(computer,outputFile);
+            WriteConfidenceResult(computer, outputFile);
         }
     }
 
@@ -91,7 +91,7 @@ public class Config
     {
         string[] splitString = OutputPath.Split("\\");
         splitString[^1] = "ConfidenceOfAEP" + AEP + ".hdf";
-        return String.Join("\\", splitString);
+        return string.Join("\\", splitString);
     }
     private string[] GetAllResultsFiles()
     {
@@ -110,7 +110,7 @@ public class Config
         bool _ = writer.OverwriteTimeseriesInHDFResults(computer, DesiredAEPs); // .5 = 2yr event, .02 = 50yr event, .04 = 25yr event
         //TODO: Add a check for success.
     }
-    private void WriteConfidenceResult(ConfidenceComputer computer,string outputPath)
+    private void WriteConfidenceResult(ConfidenceComputer computer, string outputPath)
     {
         AEPResultsWriter writer = new(outputPath);
         bool _ = writer.OverwriteTimeseriesInHDFResults(computer, DesiredQuantiles);
@@ -118,7 +118,7 @@ public class Config
     }
     private static void CompileResults(string[] resultsFiles, BaseComputer computer)
     {
-        foreach(string resultsfile in resultsFiles)
+        foreach (string resultsfile in resultsFiles)
         {
             RasResultWrapper rasResult = new(resultsfile);
             computer.AddResults(rasResult);

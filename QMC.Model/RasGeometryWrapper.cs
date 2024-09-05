@@ -1,13 +1,14 @@
-﻿using AEPGG.Model.Interfaces;
+﻿using QPC.Model.Interfaces;
+using QPC.Model.RasTools;
 using RasMapperLib;
 
-namespace AEPGG.Model;
+namespace QPC.Model;
 /// <summary>
 /// This class stores the important bits of a RAS Geometry file, so we only have to dig into it once. 
 /// </summary>
-public class RasGeometryWrapper: IGeometry
+public class RasGeometryWrapper : IGeometry
 {
-    public bool HasXSs {get;}
+    public bool HasXSs { get; }
     public bool HasSAs { get; }
     public bool Has2Ds { get; }
     public string[] MeshNames { get; }
@@ -19,12 +20,12 @@ public class RasGeometryWrapper: IGeometry
             throw new Exception("invalid results file");
         }
         RASGeometry Geometry = result.Geometry;
-        HasXSs = RasTools.RASResultsTools.ContainsXS(Geometry);
-        HasSAs = RasTools.RASResultsTools.ContainsSA(Geometry);
-        Has2Ds = RasTools.RASResultsTools.Contains2D(Geometry);
-        if(Has2Ds)
+        HasXSs = RASResultsTools.ContainsXS(Geometry);
+        HasSAs = RASResultsTools.ContainsSA(Geometry);
+        Has2Ds = RASResultsTools.Contains2D(Geometry);
+        if (Has2Ds)
         {
-            MeshNames = RasTools.RASResultsTools.GetMeshNames(Geometry);
+            MeshNames = RASResultsTools.GetMeshNames(Geometry);
         }
     }
 }

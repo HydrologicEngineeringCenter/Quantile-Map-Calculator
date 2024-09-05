@@ -1,6 +1,6 @@
-﻿using AEPGG.Model.Interfaces;
+﻿using QPC.Model.Interfaces;
 
-namespace AEPGG.Model.Computers;
+namespace QPC.Model.Computers;
 
 public abstract class BaseComputer
 {

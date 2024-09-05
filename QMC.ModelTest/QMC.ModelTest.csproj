@@ -25,7 +25,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\AEPGG.Model\AEPGG.Model.csproj" />
+    <ProjectReference Include="..\QMC.Model\QMC.Model.csproj" />
   </ItemGroup>
 
 </Project>

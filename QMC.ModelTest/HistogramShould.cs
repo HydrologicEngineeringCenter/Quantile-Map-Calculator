@@ -1,6 +1,6 @@
-﻿using AEPGG.Model;
+﻿using QPC.Model;
 
-namespace AEPGG.ModelTest
+namespace QPC.ModelTest
 {
     [Trait("RunsOn", "Remote")]
     public class HistogramShould
@@ -21,7 +21,7 @@ namespace AEPGG.ModelTest
         {
             Histogram histogram = new(1, 0, 10);
             histogram.AddValue(.99f); // bin 0
-            for(int i =1; i < 10; i++)
+            for (int i = 1; i < 10; i++)
             {
                 histogram.AddValue(i);
             }
@@ -32,7 +32,7 @@ namespace AEPGG.ModelTest
         [Fact]
         public void ReturnLastBinValueForExceedenceProbabilityTooSmall()
         {
-              Histogram histogram = new(1, 0, 20);
+            Histogram histogram = new(1, 0, 20);
             histogram.AddValue(.99f); // bin 0
             for (int i = 1; i < 10; i++)
             {

@@ -1,4 +1,4 @@
-﻿using AEPGG.Model;
+﻿using QPC.Model;
 using System.Text.Json;
 
 string jsonString = ScriptSetup();

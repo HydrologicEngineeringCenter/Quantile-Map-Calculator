@@ -1,7 +1,7 @@
 ﻿using H5Assist;
 using Ras.Layers;
 
-namespace AEPGG.Model.RasTools;
+namespace QPC.Model.RasTools;
 
 public class H5WriterTools
 {
@@ -17,7 +17,7 @@ public class H5WriterTools
     public static void OverwriteMaxWSEforAllXs(string filePath, float[] data)
     {
         string hdfPathToData = ResultsDatasets.Unsteady.SummaryOutput.CrossSections.MaxWaterSurface.Name;
-        WriteDataToHDF(filePath, hdfPathToData, data,0);
+        WriteDataToHDF(filePath, hdfPathToData, data, 0);
     }
 
     /// <summary> Overwrites the water surface elevation in the results timeseries with a single profile for each of the specified meshes </summary>
