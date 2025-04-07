@@ -1,4 +1,4 @@
-﻿using QPC.Model.Interfaces;
+﻿using QMC.Model.Interfaces;
 
 namespace QPC.Model
 {

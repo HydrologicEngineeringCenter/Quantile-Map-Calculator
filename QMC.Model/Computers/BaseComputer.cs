@@ -1,6 +1,6 @@
-﻿using QPC.Model.Interfaces;
+﻿using QMC.Model.Interfaces;
 
-namespace QPC.Model.Computers;
+namespace QMC.Model.Computers;
 
 public abstract class BaseComputer
 {

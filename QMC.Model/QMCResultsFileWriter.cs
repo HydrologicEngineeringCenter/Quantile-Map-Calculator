@@ -1,16 +1,16 @@
-﻿using QPC.Model.Computers;
-using QPC.Model.RasTools;
+﻿using QMC.Model.Computers;
+using QMC.Model.RasTools;
 
-namespace QPC.Model;
+namespace QMC.Model;
 
-internal class AEPResultsWriter
+internal class QMCResultsFileWriter
 {
     /// <summary>
     /// The file to which we will write. Must be an existing HDF file if using a write to HDF method. Will create the file if not existing if using a write to CSV method.
     /// </summary>
     public string OutputFilePath { get; set; }
 
-    public AEPResultsWriter(string outputFilePath)
+    public QMCResultsFileWriter(string outputFilePath)
     {
         OutputFilePath = outputFilePath;
     }

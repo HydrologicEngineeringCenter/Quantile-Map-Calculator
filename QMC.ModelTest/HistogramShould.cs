@@ -1,6 +1,6 @@
-﻿using QPC.Model;
+﻿using QMC.Model;
 
-namespace QPC.ModelTest
+namespace QMC.ModelTest
 {
     [Trait("RunsOn", "Remote")]
     public class HistogramShould

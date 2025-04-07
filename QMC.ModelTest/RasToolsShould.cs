@@ -1,9 +1,9 @@
 using H5Assist;
-using QPC.Model.RasTools;
-using Ras.Layers;
+using QMC.Model.RasTools;
 using RasMapperLib;
+using RasMapperLib.Names;
 
-namespace QPC.ModelTest
+namespace QMC.ModelTest
 {
     [Trait("RunsOn", "Local")]
     public class RasToolsShould
@@ -94,7 +94,7 @@ namespace QPC.ModelTest
             // Act
             H5WriterTools.OverwriteSingleProfile2D(newOutputFilePath, meshNames, newWSEs, 0);
             using H5Reader h5Reader = new(newOutputFilePath);
-            float[,] result = null;
+            float[,]? result = null;
             h5Reader.ReadRow(ResultsDatasets.Unsteady.TimeSeriesOutput.FlowAreas.WaterSurface(meshNames[0]), 0, ref result);
 
             // Assert

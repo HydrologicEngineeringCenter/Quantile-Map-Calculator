@@ -1,4 +1,4 @@
-﻿namespace QPC.Model.Interfaces;
+﻿namespace QMC.Model.Interfaces;
 
 /// <summary>
 /// This interface exists solely to mock in data for unit testing. 

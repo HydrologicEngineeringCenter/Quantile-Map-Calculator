@@ -1,4 +1,4 @@
-﻿namespace QPC.Model;
+﻿namespace QMC.Model;
 
 public class Histogram
 {

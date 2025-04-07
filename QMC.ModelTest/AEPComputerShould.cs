@@ -1,9 +1,9 @@
-﻿using QPC.Model;
-using QPC.Model.Computers;
-using QPC.Model.Interfaces;
+﻿using QMC.Model.Computers;
+using QMC.Model.Interfaces;
+using QPC.Model;
 using QPC.ModelTest.Mock_Data;
 
-namespace QPC.ModelTest
+namespace QMC.ModelTest
 {
     [Trait("RunsOn", "Remote")]
     public class AEPComputerShould

@@ -1,8 +1,8 @@
 ﻿using System.Text.Json.Serialization;
 using System.Text.RegularExpressions;
-using QPC.Model.Computers;
+using QMC.Model.Computers;
 
-namespace QPC.Model;
+namespace QMC.Model;
 
 public class Config
 {
@@ -106,13 +106,13 @@ public class Config
 
     private void WriteRealizationResult(BaseComputer computer)
     {
-        AEPResultsWriter writer = new(OutputPath);
+        QMCResultsFileWriter writer = new(OutputPath);
         bool _ = writer.OverwriteTimeseriesInHDFResults(computer, DesiredAEPs); // .5 = 2yr event, .02 = 50yr event, .04 = 25yr event
         //TODO: Add a check for success.
     }
     private void WriteConfidenceResult(ConfidenceComputer computer, string outputPath)
     {
-        AEPResultsWriter writer = new(outputPath);
+        QMCResultsFileWriter writer = new(outputPath);
         bool _ = writer.OverwriteTimeseriesInHDFResults(computer, DesiredQuantiles);
         //TODO: Add a check for success.
     }

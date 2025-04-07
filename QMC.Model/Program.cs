@@ -1,4 +1,4 @@
-﻿using QPC.Model;
+﻿using QMC.Model;
 using System.Text.Json;
 
 string jsonString = ScriptSetup();

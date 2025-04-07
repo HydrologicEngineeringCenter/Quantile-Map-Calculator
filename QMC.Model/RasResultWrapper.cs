@@ -1,7 +1,7 @@
-﻿using QPC.Model.Interfaces;
-using QPC.Model.RasTools;
+﻿using QMC.Model.Interfaces;
+using QMC.Model.RasTools;
 
-namespace QPC.Model;
+namespace QMC.Model;
 
 public class RasResultWrapper : IHydraulicResults
 {

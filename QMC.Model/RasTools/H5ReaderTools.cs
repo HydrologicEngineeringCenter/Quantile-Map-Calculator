@@ -1,7 +1,7 @@
 ﻿using H5Assist;
-using Ras.Layers;
+using RasMapperLib.Names;
 
-namespace QPC.Model.RasTools;
+namespace QMC.Model.RasTools;
 
 public static class H5ReaderTools
 {
