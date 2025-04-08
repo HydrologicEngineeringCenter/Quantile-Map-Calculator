@@ -33,9 +33,9 @@ static void EntryPoint(string jsonString)
     {
         jsonConfig = JsonSerializer.Deserialize<Config>(jsonString);
     }
-    catch (JsonException e)
+    catch (Exception)
     {
-        Console.WriteLine("Failed to deserialize");
+        Console.WriteLine("json failed to deserialize");
         return;
     }
     jsonConfig.Compute();

@@ -15,7 +15,6 @@ internal class QMCResultsFileWriter
         OutputFilePath = outputFilePath;
     }
 
-
     /// <summary>
     /// Overwrites the max water surface elevation for all 2D cells in the HEC-RAS result file with the results from the project for the specified AEP. Project must have results. Output file must have a matching geometry to the project.
     /// </summary>
@@ -26,17 +25,19 @@ internal class QMCResultsFileWriter
     {
         if (!File.Exists(OutputFilePath) && !(Path.GetExtension(OutputFilePath) == ".hdf"))
         {
-            return false;
+            throw new Exception("Output file must be an exisitng ras result HDF file.");
         }
+
+        using H5io h5Io = new(OutputFilePath);
         if (project.Geometry.Has2Ds)
         {
             float[][] result = project.GetResultsForAEP2D(AEP); //only using 1 AEP.
-            H5WriterTools.OverwriteMaxWSEForAll2DCells(OutputFilePath, result, project.Geometry.MeshNames);
+            h5Io.OverwriteMaxWSEForAll2DCells( result, project.Geometry.MeshNames);
         }
         if (project.Geometry.HasXSs)
         {
             float[] result = project.GetResultsForAEPXS(AEP);
-            H5WriterTools.OverwriteMaxWSEforAllXs(OutputFilePath, result);
+            h5Io.OverwriteMaxWSEforAllXs(result);
         }
         if (project.Geometry.HasSAs)
         {
@@ -52,19 +53,21 @@ internal class QMCResultsFileWriter
     {
         if (!File.Exists(OutputFilePath) && !(Path.GetExtension(OutputFilePath) == ".hdf"))
         {
-            return false;
+            throw new Exception("Output file must be an exisitng ras result HDF file.");
         }
+
+        using H5io h5Io = new(OutputFilePath);
         for (int i = 0; i < AEPs.Length; i++)
         {
             if (project.Geometry.Has2Ds)
             {
                 float[][] result = project.GetResultsForAEP2D(AEPs[i]);
-                H5WriterTools.OverwriteSingleProfile2D(OutputFilePath, project.Geometry.MeshNames, result, i);
+                h5Io.OverwriteSingleProfile2D(project.Geometry.MeshNames, result, i);
             }
             if (project.Geometry.HasXSs)
             {
                 float[] result = project.GetResultsForAEPXS(AEPs[i]);
-                H5WriterTools.OverwriteSingleProfileXS(OutputFilePath, result, i);
+                h5Io.OverwriteSingleProfileXS(result, i);
             }
             if (project.Geometry.HasSAs)
             {

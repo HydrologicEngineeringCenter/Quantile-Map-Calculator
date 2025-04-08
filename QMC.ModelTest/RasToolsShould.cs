@@ -18,7 +18,8 @@ namespace QMC.ModelTest
         public void GetWSEsForAllNodes_ReturnsData(bool getMax)
         {
             var meshNames = RASResultsTools.GetMeshNames(RAsResult.Geometry);
-            var result = H5ReaderTools.GetMaxOrMinWSEForAll2DCells(filePath, getMax, meshNames);
+            using H5io reader = new(filePath);
+            var result = reader.GetMaxOrMinWSEForAll2DCells(getMax, meshNames);
             Assert.NotNull(result);
             Assert.True(result.Length > 0);
         }
@@ -40,19 +41,19 @@ namespace QMC.ModelTest
         [Fact]
         public void OverwriteMaxWSE()
         {
+            //arrange
             string newOutputFilePath = @"..\..\..\Resources\MuncieTEMP.p04.hdf";
             File.Copy(filePath, newOutputFilePath, true);
-            float[][] currentWSEs = H5ReaderTools.GetMaxOrMinWSEForAll2DCells(newOutputFilePath, true, meshNames);
-            float[][] newWSEs = (float[][])currentWSEs.Clone();
-            for (int i = 0; i < newWSEs.Length; i++)
-            {
-                for (int j = 0; j < newWSEs[i].Length; j++)
-                {
-                    newWSEs[i][j] = 9.0f;
-                }
-            }
-            H5WriterTools.OverwriteMaxWSEForAll2DCells(newOutputFilePath, newWSEs, meshNames);
-            float[][] result = H5ReaderTools.GetMaxOrMinWSEForAll2DCells(newOutputFilePath, true, meshNames);
+            using H5io originalFile = new(filePath);
+            using H5io newFile = new(newOutputFilePath);
+
+            //act
+            float[][] currentWSEs = originalFile.GetMaxOrMinWSEForAll2DCells(true, meshNames);
+            float[][] newWSEs = currentWSEs.Select(row => Enumerable.Repeat(9.0f, row.Length).ToArray()).ToArray();
+            newFile.OverwriteMaxWSEForAll2DCells(newWSEs, meshNames);
+
+            //assert
+            float[][] result = newFile.GetMaxOrMinWSEForAll2DCells(true, meshNames);
             Assert.Equal(9.0f, result[0][0]);
         }
 
@@ -60,7 +61,8 @@ namespace QMC.ModelTest
         public void GetMaxWSEForAllXS_ShouldReturnData()
         {
             // Act
-            float[] result = H5ReaderTools.GetMaxWSEForAllXS(filePath);
+            using H5io reader = new(filePath);
+            float[] result = reader.GetMaxWSEForAllXS();
 
             // Assert
             Assert.NotNull(result);
@@ -71,7 +73,8 @@ namespace QMC.ModelTest
         public void GetMinWSEForAllXS_ShouldReturnData()
         {
             // Act
-            float[] result = H5ReaderTools.GetMinWSEForAllXS(filePath);
+            using H5io reader = new(filePath);
+            float[] result = reader.GetMinWSEForAllXS();
 
             // Assert
             Assert.NotNull(result);
@@ -84,21 +87,17 @@ namespace QMC.ModelTest
             // Arrange
             string newOutputFilePath = @"..\..\..\Resources\MuncieTEMP.p04.hdf";
             File.Copy(filePath, newOutputFilePath, true);
-            float[][] currentWSEs = H5ReaderTools.GetMaxOrMinWSEForAll2DCells(newOutputFilePath, true, meshNames);
-            float[][] newWSEs = (float[][])currentWSEs.Clone();
-            for (int i = 0; i < newWSEs[0].Length; i++)
-            {
-                newWSEs[0][i] = 9.0f;
-            }
+            using H5io originalFile = new(filePath);
+            using H5io newFile = new(newOutputFilePath);
 
             // Act
-            H5WriterTools.OverwriteSingleProfile2D(newOutputFilePath, meshNames, newWSEs, 0);
-            using H5Reader h5Reader = new(newOutputFilePath);
-            float[,]? result = null;
-            h5Reader.ReadRow(ResultsDatasets.Unsteady.TimeSeriesOutput.FlowAreas.WaterSurface(meshNames[0]), 0, ref result);
+            float[][] currentWSEs = originalFile.GetMaxOrMinWSEForAll2DCells(true, meshNames);
+            float[][] newWSEs = currentWSEs.Select(row => Enumerable.Repeat(9.0f, row.Length).ToArray()).ToArray();
+            newFile.OverwriteSingleProfile2D(meshNames, newWSEs, 0);
+            float[] result = newFile.GetWSEFor2DProfile(meshNames[0], 0);
 
             // Assert
-            Assert.Equal(9.0f, result[0, 0]);
+            Assert.Equal(9.0f, result[0]);
         }
     }
 }

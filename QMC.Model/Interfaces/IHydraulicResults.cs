@@ -12,10 +12,5 @@ public interface IHydraulicResults
     public float[] GetMinXSWSE();
     float[][] Get2DWSE(int profileOfInterest, string[] meshNames);
     float[] GetXSWSE(int profileOfInterest);
-
-    /// <summary>
-    /// File Path to an HEC-RAS 6.x unsteady hdf result. 
-    /// </summary>
-    public string FilePath { get; }
-
+    string FilePath { get; }
 }
