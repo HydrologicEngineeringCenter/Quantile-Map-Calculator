@@ -7,11 +7,23 @@ using Utility.Reflection;
 
 internal class Program
 {
+    /// <summary>
+    /// CLI Entry Point
+    /// </summary>
     static void Main(string[] args)
     {
         Parser.Default.ParseArguments<Options>(args)
           .WithParsed(RunOptions)
           .WithNotParsed(HandleParseError);
+    }
+
+    /// <summary>
+    /// This exists to give a programmatic way to debug, rather than running from true commandline.
+    /// </summary>
+    static void CallMain(string args)
+    {
+        string[] convertedToCommandLine = Utility.CommandLine.CommandLineHelpers.SplitIntoCLIArgs(args);
+        Main(convertedToCommandLine);
     }
 
     class Options
