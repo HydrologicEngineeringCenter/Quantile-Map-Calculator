@@ -22,6 +22,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "QMC.RasToolsTest", "QMC.Ras
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Scratch", "Scratch\Scratch.csproj", "{83759ABE-0940-4C57-B18E-DE2155815D16}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Testing", "Testing", "{56AD3F15-B5A4-4E2A-9EAF-52C92C6088B2}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -55,6 +57,11 @@ Global
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{B442F08A-29B3-44D2-AF8F-AB07E527E347} = {56AD3F15-B5A4-4E2A-9EAF-52C92C6088B2}
+		{12C4A112-8BF4-4972-8703-9CBA8B2CF736} = {56AD3F15-B5A4-4E2A-9EAF-52C92C6088B2}
+		{83759ABE-0940-4C57-B18E-DE2155815D16} = {56AD3F15-B5A4-4E2A-9EAF-52C92C6088B2}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {DF51C008-4EB5-45EA-9B96-AD780543E8B7}
