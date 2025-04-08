@@ -1,7 +1,7 @@
 ﻿using H5Assist;
 using RasMapperLib.Names;
 
-namespace QMC.Model.RasTools;
+namespace QMC.RasTools;
 
 public class H5io : IDisposable
 {

@@ -7,7 +7,7 @@
 	</PropertyGroup>
 	
 	<ItemGroup>
-		<PackageReference Include="HEC.RAS.Ras.Mapper" Version="0.1.0.1576-dev" />
+	  <ProjectReference Include="..\QMC.RasTools\QMC.RasTools.csproj" />
 	</ItemGroup>
 
 </Project>

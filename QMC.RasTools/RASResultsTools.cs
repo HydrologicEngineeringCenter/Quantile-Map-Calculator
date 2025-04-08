@@ -1,6 +1,6 @@
 ﻿using RasMapperLib;
 
-namespace QMC.Model.RasTools;
+namespace QMC.RasTools;
 
 public static class RASResultsTools
 {

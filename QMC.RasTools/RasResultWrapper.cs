@@ -1,7 +1,6 @@
 ﻿using QMC.Model.Interfaces;
-using QMC.Model.RasTools;
 
-namespace QMC.Model;
+namespace QMC.RasTools;
 
 public class RasResultWrapper : IHydraulicResults, IDisposable
 {
@@ -22,7 +21,7 @@ public class RasResultWrapper : IHydraulicResults, IDisposable
     /// <returns>[MeshIndex][CellIndex]</returns>
     public float[][] GetMin2DWSE(string[] meshNames)
     {
-        return _h5ReadWrite.GetMaxOrMinWSEForAll2DCells( false, meshNames);
+        return _h5ReadWrite.GetMaxOrMinWSEForAll2DCells(false, meshNames);
     }
     public float[] GetMaxXSWSE()
     {
@@ -37,7 +36,7 @@ public class RasResultWrapper : IHydraulicResults, IDisposable
     /// </summary>
     public float[] GetXSWSE(int profileIndex)
     {
-        return _h5ReadWrite.GetWSEForXSProfile( profileIndex);
+        return _h5ReadWrite.GetWSEForXSProfile(profileIndex);
     }
     /// <summary>
     /// Gets the water surface elevations for a specific profile in the results timeseries.
@@ -48,7 +47,7 @@ public class RasResultWrapper : IHydraulicResults, IDisposable
         float[][] results = new float[meshNames.Length][];
         for (int i = 0; i < meshNames.Length; i++)
         {
-            results[i] = _h5ReadWrite.GetWSEFor2DProfile( meshNames[i], profileIndex);
+            results[i] = _h5ReadWrite.GetWSEFor2DProfile(meshNames[i], profileIndex);
         }
         return results;
     }

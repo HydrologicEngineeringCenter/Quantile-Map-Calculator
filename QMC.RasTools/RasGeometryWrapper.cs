@@ -1,8 +1,7 @@
 ﻿using QMC.Model.Interfaces;
-using QMC.Model.RasTools;
 using RasMapperLib;
 
-namespace QMC.Model;
+namespace QMC.RasTools;
 /// <summary>
 /// This class stores the important bits of a RAS Geometry file, so we only have to dig into it once. 
 /// </summary>

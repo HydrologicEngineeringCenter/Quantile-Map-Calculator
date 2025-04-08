@@ -1,5 +1,5 @@
 ﻿using QMC.Model.Computers;
-using QMC.Model.RasTools;
+using QMC.RasTools;
 
 namespace QMC.Model;
 
@@ -18,9 +18,6 @@ internal class QMCResultsFileWriter
     /// <summary>
     /// Overwrites the max water surface elevation for all 2D cells in the HEC-RAS result file with the results from the project for the specified AEP. Project must have results. Output file must have a matching geometry to the project.
     /// </summary>
-    /// <param name="project"></param>
-    /// <param name="outputFilePath"></param>
-    /// <param name="AEP"></param>
     public bool OverwriteMaxWSEinHDFResults(AEPComputer project, float AEP)
     {
         if (!File.Exists(OutputFilePath) && !(Path.GetExtension(OutputFilePath) == ".hdf"))
