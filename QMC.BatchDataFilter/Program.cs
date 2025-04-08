@@ -5,12 +5,14 @@ using RasMapperLib.Names;
 using System.Diagnostics;
 using Utility.Reflection;
 
-internal class Program
+namespace QMC.BatchDataFilter;
+
+public class Program
 {
     /// <summary>
     /// CLI Entry Point
     /// </summary>
-    static void Main(string[] args)
+    public static void Main(string[] args)
     {
         Parser.Default.ParseArguments<Options>(args)
           .WithParsed(RunOptions)
@@ -20,7 +22,7 @@ internal class Program
     /// <summary>
     /// This exists to give a programmatic way to debug, rather than running from true commandline.
     /// </summary>
-    static void CallMain(string args)
+    public static void CallMain(string args)
     {
         string[] convertedToCommandLine = Utility.CommandLine.CommandLineHelpers.SplitIntoCLIArgs(args);
         Main(convertedToCommandLine);
@@ -82,14 +84,14 @@ internal class Program
         {
             for (int i = 0; i < meshNames.Length; i++)
             {
-                
+
                 writer.WriteDataset(ResultsDatasets.Unsteady.SummaryOutput.FlowAreas.MaxWaterSurface.Name(meshNames[i]), maxs[i]);
                 writer.WriteDataset(ResultsDatasets.Unsteady.SummaryOutput.FlowAreas.MinWaterSurface.Name(meshNames[i]), mins[i]);
             }
         }
 
         //write the max and min XS WSE if it exists
-        if(maxXS != null && minXS != null)
+        if (maxXS != null && minXS != null)
         {
             writer.WriteDataset(ResultsDatasets.Unsteady.SummaryOutput.CrossSections.MaxWaterSurface.Name, maxXS);
             writer.WriteDataset(ResultsDatasets.Unsteady.SummaryOutput.CrossSections.MinWaterSurface.Name, minXS);
@@ -98,4 +100,3 @@ internal class Program
         writer.Flush();
     }
 }
-
