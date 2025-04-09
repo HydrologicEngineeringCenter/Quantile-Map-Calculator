@@ -1,42 +1,56 @@
-﻿using QMC.Model;
+﻿using CommandLine;
 using System.Text.Json;
+using Utility.Progress;
 
-string jsonString = ScriptSetup();
-EntryPoint(jsonString);
+namespace QMC.Model;
 
-//This is just creating a JSON string to pass into the entry point. In a real compute, this string would be written by the user outside the library. 
-static string ScriptSetup()
+public class Program
 {
-    //Hard coded to local data. too big to upload to github. 
-    //Do this as JSON for acutal computes. 
-    string lifecycleDirectoryPath = @"D:\AEP Grid\All2DMuncie\Muncie_WAT\runs\Without_Project_Conditions\FRA_50yr\realization 1\lifecycle 1\";
-    string outputFilePath = "D:\\AEP Grid\\muncieAll2D_50_WriteMultipleAEPS.hdf";
-    float[] theAEPs = [.99f, .5f, .2f, .1f, .02f];
-    Config config = new()
+    /// <summary>
+    /// CLI Entry Point
+    /// </summary>
+    public static void Main(string[] args)
     {
-        ResultsDirectory = lifecycleDirectoryPath,
-        OutputPath = outputFilePath,
-        DesiredAEPs = theAEPs,
-        IsRealizationCompute = true,
-        BinWidth = 0.1f,
-        Range = 20f
-    };
-    string jsonString = JsonSerializer.Serialize(config);
-    return jsonString;
-}
+        Parser.Default.ParseArguments<Options>(args)
+          .WithParsed(RunOptions)
+          .WithNotParsed(HandleParseError);
+    }
 
-//Imagining this would be the whole Program file entry point if this were published as a console app. 
-static void EntryPoint(string jsonString)
-{
-    Config jsonConfig;
-    try
+    /// <summary>
+    /// This exists to give a programmatic way to debug, rather than running from true commandline.
+    /// </summary>
+    public static void CallMain(string args)
     {
-        jsonConfig = JsonSerializer.Deserialize<Config>(jsonString);
+        string[] convertedToCommandLine = Utility.CommandLine.CommandLineHelpers.SplitIntoCLIArgs(args);
+        Main(convertedToCommandLine);
     }
-    catch (Exception)
+
+    class Options
     {
-        Console.WriteLine("json failed to deserialize");
-        return;
+        [Value(0, MetaName = "config file",  HelpText = "This is the configuration file. Should be formatted to example spec. in JSON. ")]
+        public string ConfigFile { get; set; }
     }
-    jsonConfig.Compute();
+
+    static void RunOptions(Options opts)
+    {
+        if (!File.Exists(opts.ConfigFile))
+        {
+            Console.WriteLine("Input file is required.");
+            return;
+        }
+        Config config = JsonSerializer.Deserialize<Config>(File.ReadAllText(opts.ConfigFile));
+        if (config == null)
+        {
+            Console.WriteLine("Config file is not valid.");
+            return;
+        }
+        ComputeManager computeManager = new(config);
+        ProgressReporter progressReporter = ProgressReporter.ConsoleWrite();
+        computeManager.Compute();
+    }
+
+    static void HandleParseError(IEnumerable<Error> errs)
+    {
+        //handle errors
+    }
 }

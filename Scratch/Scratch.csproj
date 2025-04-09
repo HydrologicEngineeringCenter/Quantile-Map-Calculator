@@ -8,7 +8,8 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\QMC.BatchDataFilter\QMC.BatchDataFilter.csproj" />
+    <ProjectReference Include="..\QMC.BatchDataFilter\QMC.DataFilter.csproj" />
+    <ProjectReference Include="..\QMC.Model\QMC.Model.csproj" />
   </ItemGroup>
 
 </Project>

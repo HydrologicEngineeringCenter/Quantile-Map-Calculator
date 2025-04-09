@@ -1,7 +1,4 @@
 ﻿using System.Text.Json.Serialization;
-using System.Text.RegularExpressions;
-using QMC.Model.Computers;
-using QMC.RasTools;
 
 namespace QMC.Model;
 
@@ -49,80 +46,5 @@ public class Config
     /// </summary>
     public Config()
     {
-    }
-    /// <summary>
-    /// Copies the first results file to the output file, Creates histograms of all results files which exist recursively in the ResultsDirectory, and writes the results to the output file at the locations requested.
-    /// </summary>
-    public void Compute()
-    {
-        string[] filteredFiles = GetAllResultsFiles();
-        RasResultWrapper seedResult = new(filteredFiles[0]);
-        if (IsRealizationCompute)
-        {
-            ComputeRealizationResult(filteredFiles, seedResult);
-        }
-        else
-        {
-            ComputeConfidenceResult(filteredFiles, seedResult);
-        }
-    }
-    private void ComputeRealizationResult(string[] filteredFiles, RasResultWrapper seedResult)
-    {
-        //copy the seed file to the output file
-        string seedFile = filteredFiles[0];
-        File.Copy(seedFile, OutputPath, true);
-
-        AEPComputer computer = new(seedResult, BinWidth, Range);
-        CompileResults(filteredFiles, computer);
-        WriteRealizationResult(computer);
-    }
-    private void ComputeConfidenceResult(string[] filteredFiles, RasResultWrapper seedResult)
-    {
-        for (int i = 0; i < DesiredAEPs.Length; i++)
-        {
-            ConfidenceComputer computer = new(seedResult, BinWidth, Range, profileOfInterest: i);
-            string outputFile = GetConfidenceFileName(DesiredAEPs[i]);
-            File.Copy(filteredFiles[0], outputFile, true);
-            CompileResults(filteredFiles, computer);
-            WriteConfidenceResult(computer, outputFile);
-        }
-    }
-
-    private string GetConfidenceFileName(float AEP)
-    {
-        string[] splitString = OutputPath.Split("\\");
-        splitString[^1] = "ConfidenceOfAEP" + AEP + ".hdf";
-        return string.Join("\\", splitString);
-    }
-    private string[] GetAllResultsFiles()
-    {
-        //get all the results files. Need to use the Regex to avoid a .tmp.hdf sneaking in.
-        string stringPattern = "*.p*.hdf";
-        var regexPattern = @"^.*\.p\d+\.hdf$";
-        var regex = new Regex(regexPattern);
-        string[] resultsFiles = Directory.GetFiles(ResultsDirectory, stringPattern, SearchOption.AllDirectories);
-        var filteredFiles = resultsFiles.Where(file => regex.IsMatch(file)).ToArray();
-        return filteredFiles;
-    }
-
-    private void WriteRealizationResult(BaseComputer computer)
-    {
-        QMCResultsFileWriter writer = new(OutputPath);
-        bool _ = writer.OverwriteTimeseriesInHDFResults(computer, DesiredAEPs); // .5 = 2yr event, .02 = 50yr event, .04 = 25yr event
-        //TODO: Add a check for success.
-    }
-    private void WriteConfidenceResult(ConfidenceComputer computer, string outputPath)
-    {
-        QMCResultsFileWriter writer = new(outputPath);
-        bool _ = writer.OverwriteTimeseriesInHDFResults(computer, DesiredQuantiles);
-        //TODO: Add a check for success.
-    }
-    private static void CompileResults(string[] resultsFiles, BaseComputer computer)
-    {
-        foreach (string resultsfile in resultsFiles)
-        {
-            RasResultWrapper rasResult = new(resultsfile);
-            computer.AddResults(rasResult);
-        }
     }
 }

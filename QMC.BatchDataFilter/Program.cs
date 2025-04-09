@@ -2,10 +2,8 @@
 using H5Assist;
 using QMC.RasTools;
 using RasMapperLib.Names;
-using System.Diagnostics;
-using Utility.Reflection;
 
-namespace QMC.BatchDataFilter;
+namespace QMC.DataFilter;
 
 public class Program
 {
@@ -48,7 +46,7 @@ public class Program
             Console.WriteLine("Input file is required.");
             return;
         }
-        if (string.IsNullOrWhiteSpace(opts.InputFile))
+        if (string.IsNullOrWhiteSpace(opts.OutputFile))
         {
             Console.WriteLine("Output file is required.");
             return;

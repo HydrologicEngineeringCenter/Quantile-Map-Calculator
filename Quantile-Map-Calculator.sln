@@ -14,7 +14,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "QMC.Model", "QMC.Model\QMC.
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "QMC.ModelTest", "QMC.ModelTest\QMC.ModelTest.csproj", "{B442F08A-29B3-44D2-AF8F-AB07E527E347}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "QMC.BatchDataFilter", "QMC.BatchDataFilter\QMC.BatchDataFilter.csproj", "{7FA2DAA0-F801-4C3A-9A69-37F95550BD54}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "QMC.DataFilter", "QMC.BatchDataFilter\QMC.DataFilter.csproj", "{7FA2DAA0-F801-4C3A-9A69-37F95550BD54}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "QMC.RasTools", "QMC.RasTools\QMC.RasTools.csproj", "{BC2C370A-A078-408E-BA2C-4A7D5777CEAE}"
 EndProject
