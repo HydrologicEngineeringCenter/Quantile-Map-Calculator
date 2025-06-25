@@ -24,9 +24,6 @@ jobs:
     - name: Add Nexus Source
       run: dotnet nuget add source --name fda-nuget "https://www.hec.usace.army.mil/nexus/repository/fda-nuget/"
     
-    - name: Add Nexus Source
-      run: dotnet nuget add source --name dss "https://www.hec.usace.army.mil/nexus/repository/dss/"
-    
     - name: Restore dependencies
       run: dotnet restore
     - name: Build
